@@ -1,0 +1,43 @@
+{
+    "website": {
+        "title": "Persona Framewok",
+        "description": "Persona Framewok",
+        "version": "1.0.0",
+        "creator": "Prin-Meshia",
+        "lang": "fr-FR",
+        "keywords": ""
+    },
+    "environnement": {
+        "dev": {
+            "url": ["127.0.0.1", "localhost", "::1"],
+            "debug": "full",
+            "database": {
+                "host": "",
+                "name": "",
+                "charset": "",
+                "user": "",
+                "pass": "",
+                "prefix": "",
+                "cache": true,
+                "cache_time": 60
+            }
+        }
+    },
+    "system": {
+        "language": "fr-fr",
+        "timezone": "Europe/Paris",
+        "default": {
+            "module": "test",
+            "action": "index"
+        }
+    },
+    "path": {
+        "app": "app/",
+        "src": "src/",
+        "tmp": "tmp/"
+    },
+    "route": "route.json"
+
+
+
+}
