@@ -1,6 +1,7 @@
 <?php
 namespace app\persona;
 use app\persona\route\Route;
+use app\persona\View\View;
 /**
  * Created by Prim'Meshia.
  * Datetime : 03/04/2017 12:09
@@ -77,7 +78,7 @@ class Persona extends core\Core
             $this->response->error($this->config->messages->e404, 404 ) ;
         }
         if($this->config->environment->{$this->config->system->currentEnv}->debug == 'full')
-            echo $this->profiler->display();   
+            echo $this->profiler->display($this->btrace);   
         return true;
     }
     public function getRoutes(){
