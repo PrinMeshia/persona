@@ -1,7 +1,6 @@
 <?php
 namespace app\persona;
 use app\persona\route\Route;
-use app\persona\View\View;
 /**
  * Created by Prim'Meshia.
  * Datetime : 03/04/2017 12:09
@@ -23,7 +22,7 @@ class Persona extends core\Core
         if (self::$_instance == NULL) {
             self::$_instance = new self();
         }
-        return self::$_instance;
+        return self::$_instance;  
     }
     public function getRootDir()
     {

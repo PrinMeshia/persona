@@ -10,9 +10,6 @@ $startTime = microtime(true);
 define('PUBLIC_PATH',dirname(realpath(__FILE__)) . "/");
 define('ROOT',dirname(PUBLIC_PATH));
 define('APPPATH',ROOT . "/app/");
-define('CONFPATH',APPPATH . "config/");
-define('SRCPATH',ROOT . "/src/");
-define('MODPATH', SRCPATH .'modules/');
 require_once APPPATH . 'Autoloader.class.php';
 $persona = app\persona\Persona::singleton();
 if($persona->config->system->currentEnv != '' && isset($persona->config->environment->{$persona->config->system->currentEnv}->debug)){ 
