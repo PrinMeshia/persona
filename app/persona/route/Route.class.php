@@ -18,4 +18,5 @@ class Route
         $this->route = $routeKey;
         $this->function = $func;
     }
+    
 }

@@ -12,18 +12,15 @@ class View
 {
     protected $data;
     protected $src;
-    private static $_core;
-    public static $btrace;
-    public function __construct($core){
-        self::$_core = $core;
+    private $personna;
+    public function __construct($personna){
+        $this->persona = $personna;
     }
      public function load($view,$vars=array(),$template = null){
 
          $urlView = VIEWPATH.$view.'.phtml';
-         self::$_core->template->assign($vars);
+         $this->persona->template->assign($vars);
          //extract($vars, EXTR_OVERWRITE);
-         echo 'toto';
-         self::$btrace = ob_get_clean();
          if (file_exists($urlView)) {
              if ($template) {
                  
@@ -31,17 +28,17 @@ class View
                  require($urlView);
                  $content = ob_get_clean();
                  
-                 self::$_core->template->assign('content',$content);
-                 self::$_core->template->parse(VIEWPATH . 'template/' . $template . '.phtml');
+                 $this->persona->template->assign('content',$content);
+                 $this->persona->template->parse(VIEWPATH . 'template/' . $template . '.phtml');
                  //require(VIEWPATH . 'template/' . $template . '.phtml');
              } else {
                  require($urlView);
              }
          } else {
                 if(DEFENV == ENVDEV)
-                    return self::$_core->response->error("View filename '{$view}' NOT found in '". VIEWPATH."'.",2);
+                    return $this->persona->response->error("View filename '{$view}' NOT found in '". VIEWPATH."'.",2);
                 else
-                    return self::$_core->response->error('',2);
+                    return $this->persona->response->error('',2);
         }
     }
 }

@@ -11,23 +11,23 @@ class Controller{
     protected $_model;
     protected $_controller;
     protected $_action;
-    private static $_core;
-    public function __construct($core){
-        self::$_core = $core;
+    private  $personna;
+    public function __construct($personna){
+        $this->personna = $personna;
     }
     public function call($module, $action = "index",$vars = array())
     {
-        $str = 'src\\modules\\'.$module.'\\'.ucfirst($module);
+        $str = $this->personna->config->namespace->module.strtolower($module).'\\'.ucfirst(strtolower($module));
         if (class_exists($str) ) {
-            $this->_controller = new $str($this);
+            $this->_controller = new $str($this->personna);
             $this->_action = $action.'Action';
             if(method_exists($this->_controller,$this->_action)){
                 call_user_func_array(array($this->_controller, $this->_action),$vars);
             }else{
-                self::$_core->response->error('Action '.$action.' not found',404);
+                $this->personna->response->error('Action '.$action.' not found',404);
             }
         }else{
-            self::$_core->response->error('Module '.$module.' not found',404);
+            $this->personna->response->error('Module '.$module.' not found',404);
         }
     }
 

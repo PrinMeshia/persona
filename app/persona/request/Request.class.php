@@ -9,37 +9,46 @@ namespace app\persona\request;
  */
 class Request
 {
-    private $get;
-    private $post;
-    private $files;
+    private $_data;
     private $server;
     private $cookie;
     private $method;
+    private $origin;
     private $requested_uri;
     public function __construct(){
         $this->createFromGlobals();
     }
-
+    public function __get($name)
+	{
+		return (isset($this->_data[$name])) ? ($this->_data[$name]) : (NULL) ;
+	}
+	public function __set($name, $value)
+	{
+		$this->_data[$name] = $value;
+	}
+	public function __isset($name)
+	{
+	    return isset($this->_data[$name]);
+	}
     private function createFromGlobals(){
-        $this->get = $_GET;
-        $this->post = $_POST;
-        $this->files = $_FILES;
+        $this->_data = $_REQUEST;
         $this->server = $_SERVER;
         $this->cookie = $_COOKIE;
         $this->method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
         $this->requested_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/' ;
+        $this->origine = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : FALSE;
     }
     public function get($key){
-        return isset($this->get[$key]) ? $this->get[$key] : false;
+        return (isset($_GET[$key])) ? ($_GET[$key]) : FALSE;
     }
     public function post($key){
-        return isset($this->post[$key]) ? $this->post[$key] : false;
+        return (isset($_POST[$key])) ? ($_POST[$key]) : FALSE;
     }
     public function server($key){
-        return isset($this->server[$key]) ? $this->server[$key] : false;
+        return isset($this->server[$key]) ? $this->server[$key] : FALSE;
     }
     public function cookie($key){
-        return isset($this->cookie[$key]) ? $this->cookie[$key] : false;
+        return isset($this->cookie[$key]) ? $this->cookie[$key] : FALSE;
     }
     public function getBody(){
         if ($this->body == null)
@@ -54,5 +63,8 @@ class Request
     }
     public function  getRequestedUri(){
         return $this->requested_uri;
+    }
+    public function clear($value){
+        return htmlentities($value);
     }
 }

@@ -7,21 +7,13 @@
         "lang": "fr-FR",
         "keywords": ""
     },
-    "environnement": {
-        "dev": {
-            "url": ["127.0.0.1", "localhost", "::1"],
-            "debug": "full",
-            "database": {
-                "host": "",
-                "name": "",
-                "charset": "",
-                "user": "",
-                "pass": "",
-                "prefix": "",
-                "cache": true,
-                "cache_time": 60
-            }
+    "environment": {
+        "default": {
+            "debug": "full"
         }
+    },
+    "layout": {
+        "name": "default"
     },
     "system": {
         "language": "fr-fr",
@@ -29,14 +21,34 @@
         "default": {
             "module": "test",
             "action": "index"
-        }
+        },
+        "currentEnv": "default"
     },
     "path": {
-        "app": "app/",
-        "src": "src/",
-        "tmp": "tmp/"
+        "app": "/app/",
+        "src": "/src/",
+        "tmp": "/tmp/",
+        "vendor": "{path.app}vendor/",
+        "module": "{path.src}module/",
+        "model": "{path.src}model/",
+        "config": "{path.app}config/"
     },
-    "route": "route.json"
+    "namespace": {
+        "app": "app\\",
+        "vendor": "{namespace.app}vendor\\",
+        "persona": "{namespace.app}persona\\",
+        "src": "src\\",
+        "module": "{namespace.src}module\\"
+    },
+    "config": {
+        "environment": "{path.config}env.json"
+    },
+    "routing": {
+        "path": "{path.config}route.json"
+    },
+    "messages": {
+        "e404": "La page que vous recherchez n'hesiste pas"
+    }
 
 
 

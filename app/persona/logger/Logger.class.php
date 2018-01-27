@@ -19,13 +19,10 @@ class Logger {
         self::$debug = $debug;
     }
     public function Write($message) {
-        if (!($fh = fopen('log/'.self::$logFile, 'a+'))) {
-            throw new \app\persona\exception\CannotOpenFileException(self::$logFile);            
+        if (!($fh = fopen('log/'.self::$logFile, 'a+'))) {          
         }
         $timeStamp = date('Y-m-d H:i:s');
-        
         if (!(fwrite($fh, "{$timeStamp} {$message}\n"))) {
-            throw new \app\persona\exception\FailedToWriteToFileException(self::$logFile);
         }
         
         fclose($fh);

@@ -1,0 +1,185 @@
+<div id="profilerBar">
+    <div id="profilerBar_header">
+        <ul>
+			<li><img src="<?= "./app/vendor/profiler/rsc/img/svg/network.svg" ?>" title="information"/></li>
+            <li><a href="javascript:" rel="profiler-info" class="profilerBar-tab"><img src="<?= "./app/vendor/profiler/rsc/img/svg/information.svg" ?>" title="information"/></a></li>
+			<li><a href="javascript:" rel="profiler-execution" class="profilerBar-tab"><img src="<?= "./app/vendor/profiler/rsc/img/svg/timer.svg" ?>" title="execution time"/><span title="Execution time"><?= $speedTotals['total']; ?></span></a></li>
+            <li></li>
+            <li style="float: right;"><a href="javascript:" rel="close" title="profiler close" class="profilerBar-tab-close hidden"><img src="<?="./app/vendor/profiler/rsc/img/svg/close.svg" ?>" title="execution time"/><span title="close"></span></a></li>
+			<li><a href="javascript:" rel="request" class="profilerBar-tab"><img src="<?= "./app/vendor/profiler/rsc/img/svg/page-code.svg" ?>" title="request"/></a></li>
+			<li><a href="javascript:" rel="trace" class="profilerBar-tab"><img src="<?= "./app/vendor/profiler/rsc/img/svg/console.svg" ?>" title="backtrace"/></a></li>
+            <li><a href="javascript:" rel="Evolution" class="profilerBar-tab">Evolution</a></li>
+        </ul>
+    </div>
+    <div id="profilerBar_body">
+		<div id="profiler-info" class="profilerBar_body-item">
+			<div class="profiler-icon">
+				<h2>Info système ( <?= $_SERVER['SERVER_NAME']; ?> )</h2>
+				<div class="clear w100">
+					<ul style="width: 30%;">
+						<li><?= 'Apache version : ' . apache_get_version(); ?></li>
+						<li><?= 'PHP version : ' . phpversion(); ?></li>
+						<li><?= 'Moteur Zend version : ' . zend_version(); ?></li>
+						
+					</ul>
+					<ul style="width: 30%;">
+						<li><?= 'Nom serveur : ' . $request['SERVER']['SERVER_NAME']; ?></li>
+						<li><?= 'Url serveur : ' . $server; ?></li>
+						<li><?= 'Ip serveur : ' . $request['SERVER']['SERVER_ADDR'].':'.$request['SERVER']['SERVER_PORT']; ?></li>
+						<li><?= 'Environnement : ' . $env; ?></li>
+					</ul>
+					<ul style="width: 30%;">
+						<li><?= 'Ip utilisateur : ' .  $userip; ?></li>
+						<li><?= 'User Agent : '.$request['SERVER']['HTTP_USER_AGENT'] ?></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="profiler-execution" class="profilerBar_body-item">
+			<div class="profiler-icon">
+				<h2>Execution ( <?= $speedTotals['total']; ?> )</h2>
+				<div class="clear w100">
+					<div style="width:45%" class="pleft">
+						<table>
+							<thead>
+							<tr><th>Fichier</th><th>Taille</th></tr>
+							</thead>
+							<tbody>
+								<?php foreach($files as $file): ?>
+										<tr style="font-size: 0.7em;">
+											<td><?= $file['name']; ?></td>
+											<td>
+												<div class="Progress">
+													<span class="Progress-label"><strong><?= $file['sizestr'];?></strong></span>
+													<progress max="<?= round($fileTotals['size'],2);?>" value="<?= round($file['size'],2);?>" class="Progress-main">
+														<div class="Progress-bar" role="presentation">
+															<span class="Progress-value" style="width: <?= round($file['size']/$fileTotals['size']*100,2);?>%;"> </span>
+														</div>
+													</progress>
+												</div>
+											</td>
+										</tr>
+								<?php endforeach; ?>
+								<tr><td><hr></td><td><hr></td></tr>
+								<tr><td>Total : <?= count($files) ?> fichiers chargés</td><td><?= $fileTotals['sizestr'] ;?></td></tr>
+							</tbody>
+						</table>
+					</div>
+					<div style="width:45%" class="pleft" style="align:right">
+						<div class="Progress">
+							<span class="Progress-label">Mémoire utilisée : <strong><?= $memoryTotals['usedstr'];?> / <?= $memoryTotals['totalstr']; ?></strong></span>
+							<progress max="<?= round($memoryTotals['total'],2);?>" value="<?= round($memoryTotals['used'],2);?>" class="Progress-main">
+								<div class="Progress-bar" role="presentation">
+									<span class="Progress-value" style="width: <?= round($memoryTotals['used']/$memoryTotals['total']*100,2);?>%;"> </span>
+								</div>
+							</progress>
+						</div>	
+						
+					</div>
+	
+				</div>
+				
+			</div>
+		</div>
+		<div id="request" class="profilerBar_body-item">
+			<div class="profiler-icon">
+				<h2>Request</h2>
+				<div class="clear w100">
+				<div style="width:45%" class="pleft">
+					<ul>
+						<li>GET :<?=  print_r($request['GET']);?></li>
+						<li>POST :<?=  print_r($request['POST']);?></li>
+						<li>COOKIE :<?=  print_r($request['COOKIE']);?></li>
+						<li>FILES :<?=  print_r($request['FILES']);?></li>
+                        <?php if(isset($request['SESSION'])): ?>
+                            <li>SESSION :<?=  print_r($request['SESSION']);?></li>
+                        <?php endif;?>
+					</ul>
+				</div>
+
+				</div>
+
+			</div>
+		</div>
+        <div id="trace" class="profilerBar_body-item">
+			<div class="profiler-icon">
+				<h2>Back-trace</h2>
+				<div class="clear w100">
+					<div style="width:45%" class="pleft">
+						<?= $BT ;?>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div id="Evolution" class="profilerBar_body-item">
+			<div class="profiler-icon">
+				<h2>Evolution</h2>
+				<div class="clear w100">
+					<div style="width:45%" class="pleft">
+						<table>
+							<tbody>
+								<tr style="font-size: 0.7em;">
+									<td>Core</td>
+									<td>
+										<div class="Progress">
+											<span class="Progress-label">50%</strong></span>
+											<progress max="100" value="50" class="Progress-main">
+												<div class="Progress-bar" role="presentation">
+													<span class="Progress-value" style="width: 50%;"> </span>
+												</div>
+											</progress>
+										</div>
+									</td>
+								</tr>
+								<tr style="font-size: 0.7em;">
+									<td>Security</td>
+									<td>
+										<div class="Progress">
+											<span class="Progress-label">50%</strong></span>
+											<progress max="100" value="50" class="Progress-main">
+												<div class="Progress-bar" role="presentation">
+													<span class="Progress-value" style="width:50%"> </span>
+												</div>
+											</progress>
+										</div>
+									</td>
+								</tr>
+								<tr style="font-size: 0.7em;">
+									<td>Routing</td>
+									<td>
+										<div class="Progress">
+											<span class="Progress-label">80%</strong></span>
+											<progress max="100" value="80" class="Progress-main">
+												<div class="Progress-bar" role="presentation">
+													<span class="Progress-value" style="width: 80%;"> </span>
+												</div>
+											</progress>
+										</div>
+									</td>
+								</tr>
+								<tr style="font-size: 0.7em;">
+									<td>Templating</td>
+									<td>
+										<div class="Progress">
+											<span class="Progress-label">30%</strong></span>
+											<progress max="100" value="30" class="Progress-main">
+												<div class="Progress-bar" role="presentation">
+													<span class="Progress-value" style="width: 30%;"> </span>
+												</div>
+											</progress>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+
+

@@ -21,7 +21,7 @@ class Session
      * @param $session_id
      * @return bool
      */
-    private function session_valid_id($session_id)
+    private function sessionValidId($session_id)
     {
         return preg_match('/^[-,a-zA-Z0-9]{1,128}$/', $session_id) > 0;
     }

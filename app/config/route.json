@@ -1,3 +1,6 @@
 {
-    
+    "routes": [
+        { "route": "/persona/", "method": ["GET"], "module": "Test#index" },
+        { "route": "/contact", "method": ["GET"], "module": "Test#contact" }
+    ]
 }
