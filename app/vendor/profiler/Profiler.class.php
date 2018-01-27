@@ -175,6 +175,7 @@ class Profiler
 		$this->getData();
 		$this->gatherSpeedData();
 		$this->output['env'] = \app\persona\Persona::singleton()->config->system->currentEnv;
+		$this->output['timezone'] = date_default_timezone_get();
         $this->output['BT'] = $this->persona->btrace;
 		return self::loadBar($this->output);
 	}

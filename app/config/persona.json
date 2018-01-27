@@ -12,12 +12,7 @@
     },
     "system": {
         "language": "fr-fr",
-        "timezone": "Europe/Paris",
-        "default": {
-            "module": "test",
-            "action": "index"
-        },
-        "currentEnv": "default"
+        "timezone": "Europe/Paris"
     },
     "envUrl": {
         "default": {
@@ -42,11 +37,11 @@
         "src": "src\\",
         "module": "{namespace.src}module\\"
     },
-    "config": {
-        "environment": "{path.config}env.json"
-    },
     "routing": {
         "path": "{path.config}route.json"
+    },
+    "userparam": {
+        "path": "{path.config}user.json"
     },
     "messages": {
         "e404": "La page que vous recherchez n'hesiste pas"

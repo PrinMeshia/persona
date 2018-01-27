@@ -32,10 +32,11 @@ abstract class Core
         $this->session = 'app\\persona\\session\\Session';
         $this->config = 'app\\persona\\config\\Config';
         $this->config->load('/app/config/persona.json');
-        $this->config->loadUserConfig($this->config->config);
+        $this->config->load($this->config->userparam->path);
+        
         $this->environnement = $this->config->namespace->persona.'config\\Environment';
         $this->response = $this->config->namespace->persona.'http\\Response';
-        new \app\persona\debug\Debug($this);
+        $this->debug = $this->config->namespace->persona.'debug\\Debug';
     }
     protected function storeCoreObjects()
     {
