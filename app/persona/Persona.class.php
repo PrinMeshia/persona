@@ -76,7 +76,7 @@ class Persona extends core\Core
         }else if(!$run && $this->config->messages->e404){
             $this->response->error($this->config->messages->e404, 404 ) ;
         }
-        if($this->config->environment->{$this->config->system->currentEnv}->debug == 'full')
+        if($this->config->debug == 'full')
             echo $this->profiler->display($this->btrace);   
         return true;
     }

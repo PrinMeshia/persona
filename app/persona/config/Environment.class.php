@@ -10,12 +10,20 @@ class Environment {
     private  function setEnvironment(){
         if($this->personna->config->envUrl){
             foreach ($this->personna->config->envUrl as $key => $value) {
-                if(array_search(Helpers::getUrlServer(),$value) !== false){
-                    if($this->personna->config->environment->{$key}){
-                        $this->personna->config->system->currentEnv = $key;
+                foreach ($value as $arrayAddress) {
+                    if(array_search(Helpers::getUrlServer(),$arrayAddress) !== false){
+                        $path = $this->personna->config->path->environment.$key.".json";
+                        if(file_exists(ROOT.$path)){
+                            $this->personna->config->load($path); 
+                            
+                            $this->personna->config->system->currentEnv = $key;
+                        }
                     }
                 }
             }
+        }else{
+            $this->personna->response->error('The application environment is not set correctly',503);
+            exit(1);
         }
     }
 }

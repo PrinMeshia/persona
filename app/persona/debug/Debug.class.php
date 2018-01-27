@@ -3,8 +3,8 @@ namespace app\persona\debug;
 class Debug {
     function __construct($personna)
     {
-        if($personna->config->system->currentEnv != '' && isset($personna->config->environment->{$personna->config->system->currentEnv}->debug)){
-            switch ($personna->config->environment->{$personna->config->system->currentEnv}->debug)
+        if($personna->config->debug){
+            switch ($personna->config->debug)
             {
                 case 'full':
                     error_reporting(-1);

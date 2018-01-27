@@ -42,7 +42,7 @@ class Config {
 				$content = file_get_contents($filename);
             	$this->loadData(json_decode($content, TRUE));
 			}
-		}
+        }
 	}
     private function loadData($array)	
 	{

@@ -36,7 +36,6 @@ function __autoload ( $class ) {
 	$file  = '';
 	if ( $separator = strripos( $class, '\\' ) ) {
         $namespace = substr( $class, 0, $separator );
-        var_dump($namespace);
 		if ( $namespace != __NAMESPACE__ )
 			$file  .= str_replace( '\\', '/', $namespace ) . '/';
 		$class = substr( $class, $separator + 1 );

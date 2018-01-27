@@ -58,7 +58,7 @@ class Response
         $filename = 'e'+$number;
         $vars = [];
 
-       if ($this->persona->config->environment->{$this->persona->config->system->currentEnv}->debug == 'full'){
+       if ($this->persona->debug == 'full'){
             $vars['exception'] = new \Exception($msg);
             $vars['note'] = "Routes begin always with '/' character.";
         }
