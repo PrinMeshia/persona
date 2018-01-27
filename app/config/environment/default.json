@@ -1,5 +1,5 @@
 {
-    "debug": "full",
+    "debug": 2, 
     "database": {
         "host": "test",
         "name": "test",
