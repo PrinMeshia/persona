@@ -20,6 +20,8 @@ class Autoloader{
         }
         $name = substr( $search, $this->length );
         $path = $this->dir . str_replace( '\\', '/', $name ) . '.class.php';
+        if ( is_readable( $path ) && !class_exists($name) ) {
+            require_once $path;
         }
     }
 }
