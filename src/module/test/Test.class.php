@@ -7,6 +7,6 @@ use app\persona\controller\AppController;
 class Test extends AppController
 {
     public function indexAction(){
-        $this->persona->response->ResponseHTML('<h1> HELLo WORLD </h1>');
+        $this->persona->response->ResponseHTML('<h1> HELL WORLD </h1>');
     }
 }

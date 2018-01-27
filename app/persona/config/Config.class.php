@@ -44,7 +44,6 @@ class Config
                 $this->loadData(json_decode($content, true));
             }
         }
-        var_dump(self::$configVariables);
     }
     private function loadData($array)
     {
