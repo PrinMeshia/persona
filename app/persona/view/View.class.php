@@ -28,7 +28,7 @@ class View
         if (file_exists($urlView)) {
             if ($template) {
 
-                ob_start();
+                
                 require($urlView);
                 $content = ob_get_clean();
 

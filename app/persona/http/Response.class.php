@@ -24,6 +24,7 @@ class Response
         header( 'Location: ' . $href ) ;
     }
     public function Response($filename = '', array $vars = array(), $status = 200, array $headers = array(),$asText = 0){
+        ob_start();
         $this->persona->btrace = ob_get_clean();
         $this->persona->setStatusCode($status);
         if (count($headers)){

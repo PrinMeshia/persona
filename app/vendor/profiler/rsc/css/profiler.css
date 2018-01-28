@@ -50,6 +50,8 @@
 #profilerBar_header img {
     width: 25px;
     height: 25px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 #profilerBar .hidden,
@@ -69,7 +71,8 @@
 #profilerBar * {
     font: inherit;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 5px;
+    
 }
 
 #profilerBar_header ul {
@@ -125,13 +128,6 @@
     font-size: 20px !important;
 }
 
-#profiler-execution .profiler-icon {
-    background-image: url(./app/vendor/profiler/rsc/img/svg/timer.svg);
-}
-
-#profiler-info .profiler-icon {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAwCAMAAAA8VkqRAAAAsVBMVEUAAAD///////8AAAAAAAAAAAD///////////////////////////8AAAAAAAAAAAD///8AAAD///////8AAAD///////////////8AAAD///8AAAD///////////////////8AAAAAAAD///////////8AAAAAAAD///8AAAD///////////8AAAAAAAAAAAAAAAAAAAD///////////////////8AAAAAAAD///8UcaGJirHSAAAAOXRSTlMAQKsDWQYCImQjDBewAgpdQg9FCQwDoSU5HR4lNJg7XREpS5FfeR48FAc4KwgxGgRSTxYfNlQaBQvSBFH5AAAA9ElEQVR4Xs2Qx27DMBBEZTNmwhKqWHLvvURyT7L5/w+LiHAVrU8+GIbfaYCH2QXGexg/hLKY9auO/oyIZkvUbaiLVpMIcpfm/wdP1BDYEFcimjeqOY15dOMpKjjGHl23p1BcplrjulpPL58oRDR8KxhGduhnZjzx/ReH70/G3yi6QOjGKAyITcWxEWC+UDAYrWRiUyJXI2DvKGoQL5Z7+2G/XMRQK4l1CI5wTQTz2F/Mw5XABor7NzyJDekRwdV2UMkZbBUvCQPtLNzZtAuzNphCMEgPuO4hBcZRHIFw/EDROQcBrhsE504hpDq9FpyUHfqe/AK6rDXm5Unp3QAAAABJRU5ErkJggg==);
-}
 
 .profilerBar_body-item ul {
     list-style: none none !important;
