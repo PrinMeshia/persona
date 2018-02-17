@@ -61,7 +61,7 @@ class Request
     public function getMethod(){
         return $this->method;
     }
-    public function  getRequestedUri(){
+    public function getRequestedUri(){
         return $this->requested_uri;
     }
     public function clear($value){

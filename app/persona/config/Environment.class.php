@@ -2,9 +2,9 @@
 namespace app\persona\config;
  use \app\persona\helpers\Helpers;
 class Environment {
-    private $personna;
+    private $persona;
     public function __construct($persona){
-        $this->personna = $persona;
+        $this->persona = $persona;
         
     }
     
@@ -15,13 +15,14 @@ class Environment {
             $content = json_decode($content, true);
             foreach ($content as $key => $value) {
                 foreach ($value as $arrayAddress) {
-                    if(array_search(Helpers::getUrlServer(),$arrayAddress) !== false){
-                        $this->personna->setCurrentEnv($key);
+                    
+                    if(array_search(Helpers::getUrlServer(),$arrayAddress) !== false || array_search(Helpers::getAddressServer(),$arrayAddress) !== false){
+                        $this->persona->setCurrentEnv($key);
                     }
                 }
             }
         }else{
-            $this->personna->response->error('The application environment is not set correctly',503);
+            $this->persona->response->error('The application environment is not set correctly',503);
             exit(1);
         }
     }

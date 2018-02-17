@@ -37,14 +37,14 @@ abstract class Core
         $this->session = 'app\\persona\\session\\Session';
         $this->config = 'app\\persona\\config\\Config';
         $this->config->load(['/app/config/persona.json','/app/config/environment/'.$this->getCurrentEnv().'.json']);
-        $this->debug = $this->config->namespace->persona.'debug\\Debug';
+        $this->debug = 'app\\persona\\debug\\Debug';
     }
     protected function storeCoreObjects()
     {
-        $this->router = $this->config->namespace->persona.'route\\Router';
-        $this->request = $this->config->namespace->persona.'request\\Request';
-        $this->db = $this->config->namespace->persona.'database\\Database';
-        $this->controller = $this->config->namespace->persona.'controller\\Controller';
+        $this->router = 'app\\persona\\route\\Router';
+        $this->request = 'app\\persona\\request\\Request';
+        $this->db = 'app\\persona\\database\\Database';
+        $this->controller = 'app\\persona\\controller\\Controller';
     }
     public function getRequest(){
         return $this->request;
@@ -58,7 +58,7 @@ abstract class Core
         if($this->config->system->timezone)
             date_default_timezone_set($this->config->system->timezone);
         else
-        date_default_timezone_set("UTC");
+            date_default_timezone_set("UTC");
     }
     public function setCurrentEnv($env){
         $this->_env = $env;

@@ -1,6 +1,6 @@
 {
     "routes": [
-        { "route": "/persona/", "method": ["GET"], "module": "Test#index" },
-        { "route": "/contact", "method": ["GET"], "module": "Test#contact" }
+        { "route": "/persona/", "method": ["GET"], "action": "Test#index" },
+        { "route": "/persona/test", "method": ["GET"], "action": "Test#test" }
     ]
 }

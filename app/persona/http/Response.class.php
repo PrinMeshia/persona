@@ -11,9 +11,9 @@ namespace app\persona\http;
 
 class Response
 {
-    private static $personna;
-    public function __construct($personna){
-        $this->persona = $personna;
+    private $persona;
+    public function __construct($persona){
+        $this->persona = $persona;
     }
     protected function forbidden(){
         header('HTTP/1.0 403 forbidden');
@@ -24,15 +24,13 @@ class Response
         header( 'Location: ' . $href ) ;
     }
     public function Response($filename = '', array $vars = [], $status = 200, array $headers = [],$asText = 0){
-        ob_start();
         $this->persona->btrace = ob_get_clean();
         $this->persona->setStatusCode($status);
         if (count($headers)){
             $this->addCustomHeaders($headers);
         }
         if (!$asText){
-            $this->persona->view->init(VIEW_DIR.$filename, $vars, $this);
-            $this->persona->view->load();
+            $this->persona->view->load($filename, $vars, $this);
         }
         else 
             echo $filename;
@@ -64,9 +62,9 @@ class Response
             $vars['note'] = "Routes begin always with '/' character.";
         }
         if(file_exists('info/'.$filename))
-            $this->persona->view->load('info/'.$filename,$vars);
+            $this->Response('info/'.$filename,$vars,$number);
         else{
-             $this->ResponseHTML($msg);
+            $this->ResponseHTML($msg, $number);
         }
            
         return false;

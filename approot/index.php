@@ -9,7 +9,6 @@
 $startTime = microtime(true);
 define('PUBLIC_PATH',dirname(realpath(__FILE__)) . "/");
 define('ROOT',dirname(PUBLIC_PATH));
-define('APPPATH',ROOT . "/app/");
-require_once APPPATH . 'Autoloader.class.php';
+require_once ROOT . '/app/Autoloader.class.php';
 $persona = app\persona\Persona::singleton();
 $persona->listen();

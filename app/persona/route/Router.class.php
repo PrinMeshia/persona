@@ -11,9 +11,9 @@ namespace app\persona\route;
 
 class Router
 {
-    private $personna;
-    public function __construct($personna){
-        $this->persona = $personna;
+    private $persona;
+    public function __construct($persona){
+        $this->persona = $persona;
     }
       /**
          * @param $uri

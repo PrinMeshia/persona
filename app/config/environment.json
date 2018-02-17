@@ -1,7 +1,6 @@
 {
     "default": {
         "ip": ["127.0.0.1", "::1"],
-        "dns": ["localhost"],
-        "port":[80,8080]
+        "dns": ["localhost"]
     }
 }

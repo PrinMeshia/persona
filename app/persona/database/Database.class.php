@@ -11,7 +11,7 @@ class Database
     private $queryCache = [];
     private $dataCache = [];
     private $last;
-    private $personna;
+    private $persona;
 
 
     /**
@@ -20,8 +20,8 @@ class Database
      * @param string $dbPass
      * @param string $dbHost
      */
-    public function __construct($personna){
-        $personna = $personna;
+    public function __construct($persona){
+        $persona = $persona;
     }
 
 }

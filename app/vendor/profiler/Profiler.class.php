@@ -188,6 +188,7 @@ class Profiler
 		$this->output['env'] = $this->persona->getCurrentEnv();
 		$this->output['timezone'] = date_default_timezone_get();
 		$this->output['BT'] = $this->persona->btrace;
+		$this->output['debugBT'] = debug_backtrace();
 		return self::loadBar($this->output);
 	}
 

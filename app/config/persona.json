@@ -7,9 +7,6 @@
         "lang": "fr-FR",
         "keywords": ""
     },
-    "layout": {
-        "name": "default"
-    },
     "system": {
         "language": "fr-fr",
         "timezone": "Europe/Paris"
@@ -24,12 +21,14 @@
         "module": "{fixedpath.src}module/",
         "model": "{fixedpath.src}model/",
         "config": "{fixedpath.app}config/",
-        "environment": "{path.config}environment/"
+        "environment": "{path.config}environment/",
+        "public" : "/approot/",
+        "public_tpl" : "{path.public}tpl/",
+        "public_js" : "{path.public}js/",
+        "public_css" : "{path.public}css/",
+        "public_img" : "{path.public}img/"
     },
     "namespace": {
-        "app": "app\\",
-        "vendor": "{namespace.app}vendor\\",
-        "persona": "{namespace.app}persona\\",
         "src": "src\\",
         "module": "{namespace.src}module\\"
     },
@@ -41,6 +40,9 @@
     },
     "messages": {
         "e404": "La page que vous recherchez n'hesiste pas"
+    },
+    "layout": {
+        "path": "{path.public_tpl}default"
     }
 
 

@@ -5,7 +5,7 @@ use app\persona\route\Route;
 /**
  * Created by Prim'Meshia.
  * Datetime : 03/04/2017 12:09
- * file : personna.class.php
+ * file : persona.class.php
  * description :
  */
 class Persona extends core\Core
@@ -59,7 +59,7 @@ class Persona extends core\Core
             if (file_exists($path) && is_readable($path)) {
                 $content = json_decode(file_get_contents($path, true));
                 foreach ($content->routes as $key => $value) {
-                    $action = explode("#", $value->module);
+                    $action = explode("#", $value->action);
                     $persona->createRoute($value->route, $value->method, function () use ($persona, $action) {
                         $persona->controller->call($action[0], sizeof($action) > 1 ? $action[1] : "index");
                     });

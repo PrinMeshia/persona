@@ -1,5 +1,5 @@
 <?php
-namespace app\module\profiler;
+namespace app\vendor\profiler;
 /**
  * 
  */
