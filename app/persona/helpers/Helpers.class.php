@@ -99,6 +99,12 @@ class Helpers
     {
         return parse_ini_file($file,$section);
     }
+    public static function getDirectory($controller)
+    {
+        $parts = explode('\\', $controller);
+        array_pop($parts);
+        return implode("/",$parts);
+    }
     public static function dd(){
         
     }

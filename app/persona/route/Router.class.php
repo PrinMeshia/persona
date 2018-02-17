@@ -57,11 +57,11 @@ class Router
         foreach($uri_segments as $segment_index => $segment){
             $segment_route = $route_segments[$segment_index];
             $is_slug = preg_match('/^{[^\/]*}$/', $segment_route) || preg_match('/^:[^\/]*/', $segment_route,$matches);
-            if ($is_slug){//Note php does not support named parameters
+            if ($is_slug){
                 if (strlen(trim($segment)) === 0){
                     return false;
                 }
-                $slugs[ str_ireplace(array(':', '{', '}'), '', $segment_route) ] = $segment;//save slug key => value
+                $slugs[ str_ireplace(array(':', '{', '}'), '', $segment_route) ] = $segment;
             }
             else if($segment_route !== $segment && $is_slug !== 1)
                 return false;

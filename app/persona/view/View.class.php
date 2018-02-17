@@ -22,19 +22,26 @@ class View
     public function __construct($persona)
     {
         $this->persona = $persona;
-        $this->layout = $persona->config->layout->path;
+        $this->layout = ROOT.$persona->config->layout->path.$this->templateExt;
     }
     public function load($view, array $vars = [])
     {
         $vars = $this->validateVariables($vars);
-        echo $this->persona->request->action;
-        var_dump($view);
-        
-        $urlView = $view . $this->templateExt;
-        var_dump($urlView);
+        $urlView = ROOT.$view . $this->templateExt;
         //$this->persona->template->assign($vars);
          //extract($vars, EXTR_OVERWRITE);
          if (file_exists($urlView)) {
+             $baseView = file_get_contents($this->layout);
+             $body = file_get_contents($urlView);
+             $page = str_replace('{{body}}', $body, $baseView);
+             foreach ($this->persona->config->website as $key => $value) {
+               $page = str_replace('{{site_'.$key.'}}', $value, $page);
+            }
+             foreach ($vars as $key => $value) {
+                $page = str_replace('{{'.$key.'}}', $value, $page);
+             }
+             echo($page);
+             
         //     if ($template) {
         //         require($urlView);
         //         $content = ob_get_clean();
@@ -46,7 +53,7 @@ class View
         //     }
          } else {
             if ($this->persona->config->debug && $this->persona->config->debug == 2)
-                return $this->persona->response->error("View filename '{$urlView}' NOT found", 409);
+                return $this->persona->response->error("View filename '{$view}{$this->templateExt}' not found", 409);
             else
                 return $this->persona->response->error('', 409);
         }
@@ -58,17 +65,12 @@ class View
                 return $this->persona->response->error("Unacceptable view variable given: '{$name}'", 409);
             }
         }
-        $variables['siteDetail'] = $this->persona->config->website;
+        
  
         return $variables;
     }
  
-    private function getDirectory($controller)
-    {
-        $parts = explode('\\', $controller);
- 
-        return end($parts);
-    }
+   
  
     private function getFile($controller)
     {
