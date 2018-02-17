@@ -3,10 +3,12 @@
 namespace app\persona\core;
 abstract class Core
 {
-    protected static $objects = array();
-    protected static $conf = array();
-    protected $routes = array();
-    public $btrace = array();
+    protected static $objects = [];
+    protected static $conf = [];
+    protected $routes = [];
+    public $btrace = [];
+    private $_env;
+    public $allocatedSize = [];
     public function __construct(){
         $this->init();
     }
@@ -29,13 +31,12 @@ abstract class Core
     }
 
     protected function init(){
+        $this->response = 'app\\persona\\http\\Response';
+        $this->environment = 'app\\persona\\config\\Environment';
+        $this->environment->setEnvironment('/app/config/environment.json');
         $this->session = 'app\\persona\\session\\Session';
         $this->config = 'app\\persona\\config\\Config';
-        $this->config->load('/app/config/persona.json');
-        $this->config->load($this->config->userparam->path);
-        
-        $this->environnement = $this->config->namespace->persona.'config\\Environment';
-        $this->response = $this->config->namespace->persona.'http\\Response';
+        $this->config->load(['/app/config/persona.json','/app/config/environment/'.$this->getCurrentEnv().'.json']);
         $this->debug = $this->config->namespace->persona.'debug\\Debug';
     }
     protected function storeCoreObjects()
@@ -52,5 +53,17 @@ abstract class Core
         if ($status != 200)
             http_response_code($status);
         return $status;
+    }
+    public function setTimezone(){
+        if($this->config->system->timezone)
+            date_default_timezone_set($this->config->system->timezone);
+        else
+        date_default_timezone_set("UTC");
+    }
+    public function setCurrentEnv($env){
+        $this->_env = $env;
+    }
+    public function getCurrentEnv(){
+        return $this->_env;
     }
 }

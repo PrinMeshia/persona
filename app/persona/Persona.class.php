@@ -16,6 +16,7 @@ class Persona extends core\Core
     public function __construct()
     {
         parent::__construct();
+        $this->setTimezone();
         $this->storeCoreObjects();
         $this->loadRoute();
     }
@@ -74,7 +75,7 @@ class Persona extends core\Core
      */
     public function listen()
     {
-        $slugs = array();
+        $slugs = [];
         $run = $this->router->traverseRoutes($this->request->getMethod(), $this->routes, $slugs);
         if (!$run && (!isset($this->routes['RESPOND']) || empty($this->routes['RESPOND'])) && !$this->config->messages->e404) {
             return $this->response->error("Route not found for Path: '{$this->request->getRequestedUri()}' with HTTP Method: '{$this->request->getMethod()}'. ", 404);
@@ -84,7 +85,7 @@ class Persona extends core\Core
         } else if (!$run && $this->config->messages->e404) {
             $this->response->error($this->config->messages->e404, 404);
         }
-        if ($this->config->debug == 2)
+        if ($this->config->debug && $this->config->debug == 2)
             echo $this->profiler->display($this->btrace);
         return true;
     }

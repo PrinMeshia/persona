@@ -14,20 +14,16 @@
         "language": "fr-fr",
         "timezone": "Europe/Paris"
     },
-    "envUrl": {
-        "default": {
-            "ip": ["127.0.0.1", "::1"],
-            "dns": ["localhost"]
-        }
+    "fixedpath":{
+        "app": "/app/",
+        "src": "/src/"
     },
     "path": {
-        "app": "/app/",
-        "src": "/src/",
         "tmp": "/tmp/",
-        "vendor": "{path.app}vendor/",
-        "module": "{path.src}module/",
-        "model": "{path.src}model/",
-        "config": "{path.app}config/",
+        "vendor": "{fixedpath.app}vendor/",
+        "module": "{fixedpath.src}module/",
+        "model": "{fixedpath.src}model/",
+        "config": "{fixedpath.app}config/",
         "environment": "{path.config}environment/"
     },
     "namespace": {

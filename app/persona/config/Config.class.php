@@ -13,10 +13,10 @@ class Config
     function __get($index)
     {
         if (!array_key_exists($index, self::$configVariables)) {
-            return null;
+            return FALSE;
         }
         if (self::$configVariables[$index] === null) {
-            return null;
+            return FALSE;
         }
         return self::$configVariables[$index];
     }
@@ -31,12 +31,14 @@ class Config
     }
     public function load($filenames)
     {
+        
         if (is_array($filenames) === false) {
             $filenames = [$filenames];
         }
 
         $values = [];
         foreach ($filenames as $filename) {
+            
             $filename = ROOT . $filename;
             if (file_exists($filename)) {
                 $content = file_get_contents($filename);

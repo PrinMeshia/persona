@@ -23,7 +23,7 @@ class Response
         header('HTTP/1.0 302 Found');
         header( 'Location: ' . $href ) ;
     }
-    public function Response($filename = '', array $vars = array(), $status = 200, array $headers = array(),$asText = 0){
+    public function Response($filename = '', array $vars = [], $status = 200, array $headers = [],$asText = 0){
         ob_start();
         $this->persona->btrace = ob_get_clean();
         $this->persona->setStatusCode($status);
@@ -37,10 +37,10 @@ class Response
         else 
             echo $filename;
     }
-    public function ResponseHTML($html = '', $status = 200, array $headers = array()){
-        return $this->Response($html, array(), $status, $headers, true);
+    public function ResponseHTML($html = '', $status = 200, array $headers = []){
+        return $this->Response($html, [], $status, $headers, true);
     }
-    public function JsonResponse($data = null, $status = 200, array $headers = array() ){
+    public function JsonResponse($data = null, $status = 200, array $headers = [] ){
         $this->persona->setStatusCode($status);
         header('Content-Type: application/json');
         if (count($headers)){
@@ -49,7 +49,7 @@ class Response
         echo json_encode($data);
         exit;
     }
-    private function addCustomHeaders(array $headers = array()){
+    private function addCustomHeaders(array $headers = []){
         foreach($headers as $key=>$header){
             header($key.': '.$header);
         }
@@ -59,7 +59,7 @@ class Response
         $filename = 'e'+$number;
         $vars = [];
 
-       if ($this->persona->debug == 2){
+       if ($this->persona->config->debug && $this->persona->config->debug == 2){
             $vars['exception'] = new \Exception($msg);
             $vars['note'] = "Routes begin always with '/' character.";
         }

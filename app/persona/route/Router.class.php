@@ -37,7 +37,7 @@ class Router
         $uri_segments = preg_split('/[\/]+/',$uri,null,PREG_SPLIT_NO_EMPTY);
         return isset($uri_segments[$segment_number]) ? $uri_segments[$segment_number] : false;
     }
-    private function processUri($route, &$slugs = array()){
+    private function processUri($route, &$slugs = []){
         $url = $this->persona->request->getRequestedUri();
         $uri = parse_url($url, PHP_URL_PATH);
         $func = $this->matchUriWithRoute($uri, $route, $slugs);

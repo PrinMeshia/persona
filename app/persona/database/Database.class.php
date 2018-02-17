@@ -6,10 +6,10 @@ namespace app\persona\database;
 class Database
 {
 
-    private $connections = array();
+    private $connections = [];
     private $activeConnection = 0;
-    private $queryCache = array();
-    private $dataCache = array();
+    private $queryCache = [];
+    private $dataCache = [];
     private $last;
     private $personna;
 

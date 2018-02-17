@@ -15,7 +15,7 @@ class Controller{
     public function __construct($personna){
         $this->personna = $personna;
     }
-    public function call($module, $action = "index",$vars = array())
+    public function call($module, $action = "index",$vars = [])
     {
         $str = $this->personna->config->namespace->module.strtolower($module).'\\'.ucfirst(strtolower($module));
         if (class_exists($str) ) {

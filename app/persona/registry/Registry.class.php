@@ -3,9 +3,9 @@
 namespace app\persona\registry;
 abstract class Registry
 {
-    protected static $objects = array();
-    protected static $conf = array();
-    protected $routes = array();
+    protected static $objects = [];
+    protected static $conf = [];
+    protected $routes = [];
     public function __construct(){
         $this->config = 'app\\persona\\config\\Config';
         $this->config->load(ROOT.'/app/config/persona.json');

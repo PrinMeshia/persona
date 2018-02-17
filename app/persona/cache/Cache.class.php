@@ -2,7 +2,7 @@
 namespace app\persona\cache;
 class Cache extends Item {
 	protected $_id;
-	static protected $_cache = array();
+	static protected $_cache = [];
 	public function offsetSet ( $name, $value ) {
 		$this->id( false );
 		parent::offsetSet( $name, $value );

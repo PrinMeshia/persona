@@ -19,7 +19,7 @@ class View
     {
         $this->persona = $personna;
     }
-    public function load($view, $vars = array(), $template = null)
+    public function load($view, $vars = [], $template = null)
     {
 
         $urlView = VIEWPATH . $view . '.phtml';
