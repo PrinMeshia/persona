@@ -15,32 +15,33 @@ class View
     protected $data;
     protected $src;
     private $persona;
-    private $viewPath ;
+    private $viewPath;
     private $templateExt = '.tpl';
-    private $layout ;
+    private $layout;
     private $reservedVariables = ['siteDetail', 'body'];
     public function __construct($persona)
     {
         $this->persona = $persona;
-        $this->layout = ROOT.$persona->config->layout->path.$this->templateExt;
+        $this->layout = ROOT . $persona->config->layout->path . $this->templateExt;
     }
     public function load($view, array $vars = [])
     {
         $vars = $this->validateVariables($vars);
-        $urlView = ROOT.$view . $this->templateExt;
+        $urlView = ROOT . $view . $this->templateExt;
+
         //$this->persona->template->assign($vars);
          //extract($vars, EXTR_OVERWRITE);
-         if (file_exists($urlView)) {
-             $baseView = file_get_contents($this->layout);
-             $body = file_get_contents($urlView);
-             $page = str_replace('{{body}}', $body, $baseView);
-             foreach ($this->persona->config->website as $key => $value) {
-               $page = str_replace('{{site_'.$key.'}}', $value, $page);
+        if (file_exists($urlView)) {
+            $baseView = file_get_contents($this->layout);
+            $body = file_get_contents($urlView);
+            $page = str_replace('[body]', $body, $baseView);
+            foreach ($this->persona->config->website as $key => $value) {
+                $page = str_replace('[site_' . $key . ']', $value, $page);
             }
-             foreach ($vars as $key => $value) {
-                $page = str_replace('{{'.$key.'}}', $value, $page);
-             }
-             echo($page);
+            foreach ($vars as $key => $value) {
+                $page = str_replace('[' . $key . ']', $value, $page);
+            }
+            echo ($page);
              
         //     if ($template) {
         //         require($urlView);
@@ -51,7 +52,7 @@ class View
         //     } else {
         //         require($urlView);
         //     }
-         } else {
+        } else {
             if ($this->persona->config->debug && $this->persona->config->debug == 2)
                 return $this->persona->response->error("View filename '{$view}{$this->templateExt}' not found", 409);
             else
@@ -65,15 +66,21 @@ class View
                 return $this->persona->response->error("Unacceptable view variable given: '{$name}'", 409);
             }
         }
-        
- 
+
+
         return $variables;
     }
- 
-   
- 
-    private function getFile($controller)
+    private function assign()
     {
-        return str_replace(APP_CONTROLLER_METHOD_SUFFIX, null, $controller);
+        
     }
+    private function render()
+    {
+        
+    }
+    private function parse()
+    {
+        
+    }
+
 }
