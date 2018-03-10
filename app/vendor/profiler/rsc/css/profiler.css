@@ -94,10 +94,12 @@
 .profilerBar_body-item {
     width: 100%;
     display: none;
-    padding: 10px !important;
     overflow: auto;
     line-height: 20px;
-    padding: 0 !important;
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 0;
     background: #fff;
     border-top: 2px solid #2986AE;
     -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0 0 9px;
@@ -105,7 +107,6 @@
     margin: 0;
     color: #000;
     font-size: 12px;
-    font-family: 'Open Sans';
     height: 100%;
 }
 
@@ -120,8 +121,7 @@
 
 .profilerBar_body-item .profiler-icon {
     height: 26px;
-    background-repeat: no-repeat !important;
-    background-position: left top !important;
+    background: no-repeat left top !important;
     padding-left: 26px !important;
     color: black !important;
     line-height: 20px !important;

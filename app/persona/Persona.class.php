@@ -1,37 +1,33 @@
 <?php
 namespace app\persona;
 
+
 use app\persona\route\Route;
-/**
- * Created by Prim'Meshia.
- * Datetime : 03/04/2017 12:09
- * file : persona.class.php
- * description :
- */
+
 class Persona extends core\Core
 {
-
-    private static $_instance = null;
-
-    public function __construct()
+    protected function __construct()
     {
-        parent::__construct();
-        $this->setTimezone();
-        $this->storeCoreObjects();
-        $this->loadRoute();
     }
-
-    public static function singleton()
+    private static $_instances = null;
+    public static function getInstance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new self();
+        if (self::$_instances === null) {
+            self::$_instances = new self();
         }
-        return self::$_instance;
+        return self::$_instances;
     }
-
     public function getRootDir()
     {
         return __DIR__;
+    }
+
+    public function run()
+    {
+        $this->init();
+        $this->setTimezone();
+        $this->loadRoute();
+        $this->listen();
     }
     /**
      * @param $uri
@@ -39,6 +35,7 @@ class Persona extends core\Core
      * @param callable $callback
      * create route
      */
+
     public function createRoute($uri = '', $method, callable $callback)
     {
         if (is_array($method))
@@ -70,9 +67,7 @@ class Persona extends core\Core
         }
     }
 
-    /**
-     * @return bool
-     */
+  
     public function listen()
     {
         $slugs = [];
@@ -86,7 +81,7 @@ class Persona extends core\Core
             $this->response->error($this->config->messages->e404, 404);
         }
         if ($this->config->debug && $this->config->debug == 2)
-            echo $this->profiler->display($this->btrace);
+            echo $this->profiler->display($this->btrace, $this->getCurrentEnv());
         return true;
     }
     public function getRoutes()

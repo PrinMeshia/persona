@@ -1,15 +1,18 @@
 <?php
 namespace app\persona\debug;
+
+use app\persona\Persona;
+
 class Debug {
-    function __construct($persona)
+    function __construct()
     {
-        if($persona->config->debug){
-            switch ($persona->config->debug)
+        if(Persona::getInstance()->config->debug){
+            switch (Persona::getInstance()->config->debug)
             {
                 case 2:
                     error_reporting(-1);
                     ini_set('display_errors', 1);
-                    $persona->profiler = 'app\\vendor\\profiler\\Profiler';
+                    Persona::getInstance()->profiler = 'app\\vendor\\profiler\\Profiler';
                     break;
                 case 1:
                 case 0:
@@ -20,11 +23,11 @@ class Debug {
                         error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
                     break;
                 default:
-                    $persona->response->error('The application environment is not set correctly',503);
+                Persona::getInstance()->response->error('The application environment is not set correctly',503);
                     exit(1); // EXIT_ERROR
             }
         }else{
-            $persona->response->error('The application environment is not set correctly',503);
+            Persona::getInstance()->response->error('The application environment is not set correctly',503);
             exit(1); // EXIT_ERROR
         }
     }

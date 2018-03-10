@@ -2,6 +2,11 @@
 namespace app;
 class Autoloader{
 	public function __construct(){}
+
+	/**
+	 * @param $class
+	 * @return bool
+     */
 	public function __autoload ( $class ) {
 		if ( class_exists( $class, true ) )
 			return true;

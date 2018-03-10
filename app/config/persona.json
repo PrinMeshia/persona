@@ -43,6 +43,21 @@
     },
     "layout": {
         "path": "{path.public_tpl}default"
+    },
+    "class":{
+        "cache" : "app\\persona\\cache\\Cache",
+        "abstractcontroller" : "app\\persona\\controller\\AbstractController",
+        "controller" : "app\\persona\\controller\\Controller",
+        "debug" : "app\\persona\\debug\\debug",
+        "response" : "app\\persona\\http\\Response",
+        "logger" : "app\\persona\\logger\\Logger",
+        "request" : "app\\persona\\request\\Request",
+        "router" : "app\\persona\\route\\Router",
+        "route" : "app\\persona\\route\\Route",
+        "session" : "app\\persona\\session\\Session",
+        "view" : "app\\persona\\view\\View",
+        "template" : "app\\persona\\view\\Template",
+        "environment" : "app\\persona\\config\\Environment"
     }
 
 
