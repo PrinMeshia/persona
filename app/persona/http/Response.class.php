@@ -8,12 +8,10 @@
  */
 
 namespace app\persona\http;
-
+use app\persona\Persona;
 class Response
 {
-    private $persona;
-    public function __construct($persona){
-        $this->persona = $persona;
+    public function __construct(){
     }
     protected function forbidden(){
         header('HTTP/1.0 403 forbidden');
@@ -23,14 +21,18 @@ class Response
         header('HTTP/1.0 302 Found');
         header( 'Location: ' . $href ) ;
     }
+    private function clearEntry(){
+        Persona::getInstance()->btrace = ob_end_clean();
+       
+    }
     public function Response($filename = '', array $vars = [], $status = 200, array $headers = [],$asText = 0){
-        $this->persona->btrace = ob_get_clean();
-        $this->persona->setStatusCode($status);
+        $this->clearEntry();
+        Persona::getInstance()->setStatusCode($status);
         if (count($headers)){
             $this->addCustomHeaders($headers);
         }
         if (!$asText){
-            $this->persona->view->load($filename, $vars, $this);
+            Persona::getInstance()->view->load($filename, $vars, $this);
         }
         else 
             echo $filename;
@@ -39,7 +41,7 @@ class Response
         return $this->Response($html, [], $status, $headers, true);
     }
     public function JsonResponse($data = null, $status = 200, array $headers = [] ){
-        $this->persona->setStatusCode($status);
+        Persona::getInstance()->setStatusCode($status);
         header('Content-Type: application/json');
         if (count($headers)){
             $this->addCustomHeaders($headers);
@@ -53,16 +55,17 @@ class Response
         }
     }
     public function error($msg = '', $number = 0){
-        $status = $this->persona->setStatusCode($number);
-        $filename = 'e'+$number;
+        $status = Persona::getInstance()->setStatusCode($number);
+        $filename = 'e'.$number;
+        $filepath = Persona::getInstance()->config->path->code_info.$filename;
         $vars = [];
-
-       if ($this->persona->config->debug && $this->persona->config->debug == 2){
+       if (Persona::getInstance()->config->debug && Persona::getInstance()->config->debug == 2){
             $vars['exception'] = new \Exception($msg);
             $vars['note'] = "Routes begin always with '/' character.";
         }
-        if(file_exists('info/'.$filename))
-            $this->Response('info/'.$filename,$vars,$number);
+        
+        if(file_exists(ROOT.$filepath.Persona::getInstance()->config->system->template_ext))
+            $this->Response($filepath,$vars,$number);
         else{
             $this->ResponseHTML($msg, $number);
         }

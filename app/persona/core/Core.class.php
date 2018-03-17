@@ -9,42 +9,52 @@ abstract class Core
     public $btrace = [];
     private $_env;
     public $allocatedSize = [];
-    public function __construct(){
-        $this->init();
-    }
+
+    protected function __construct(){}
+    public abstract function run();
     public abstract function loadRoute();
     public abstract function createRoute($uri,$method, callable $callback);
     public abstract  function listen();
+
+
+
     function __set($index, $value)
     {
-        self::$objects[ $index ] = new $value($this);
+        self::$objects[ $index ] = new $value();
     }
+
+    /**
+     * @param $index
+     * @return mixed
+     */
     function __get($index)
     {
+        if(!isset(self::$objects[ $index ])){
+            if($this->config->class->{$index}){
+                $this->$index = $this->config->class->{$index};
+            }
+        }
         if( is_object ( self::$objects[ $index ] ) )
             return self::$objects[ $index ];
     }
+
+    /**
+     * @param $index
+     */
     function __unset($index)
     {
         if( is_object ( self::$objects[ $index ] ) )
             unset(self::$objects[ $index ]);
     }
 
+   
     protected function init(){
-        $this->response = 'app\\persona\\http\\Response';
-        $this->environment = 'app\\persona\\config\\Environment';
-        $this->environment->setEnvironment('/app/config/environment.json');
-        $this->session = 'app\\persona\\session\\Session';
+
         $this->config = 'app\\persona\\config\\Config';
-        $this->config->load(['/app/config/persona.json','/app/config/environment/'.$this->getCurrentEnv().'.json']);
-        $this->debug = 'app\\persona\\debug\\Debug';
-    }
-    protected function storeCoreObjects()
-    {
-        $this->router = 'app\\persona\\route\\Router';
-        $this->request = 'app\\persona\\request\\Request';
-        $this->db = 'app\\persona\\database\\Database';
-        $this->controller = 'app\\persona\\controller\\Controller';
+        $this->config->load('/app/config/persona.json');
+        $this->environment->setEnvironment('/app/config/environment.json');
+        $this->config->load('/app/config/environment/'.$this->getCurrentEnv().'.json');
+        $this->debug;
     }
     public function getRequest(){
         return $this->request;
@@ -66,4 +76,5 @@ abstract class Core
     public function getCurrentEnv(){
         return $this->_env;
     }
+
 }

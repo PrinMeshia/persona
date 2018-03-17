@@ -6,9 +6,13 @@
  * file : index.php
  * description :
  */
+
 $startTime = microtime(true);
+ob_start();
 define('PUBLIC_PATH',dirname(realpath(__FILE__)) . "/");
 define('ROOT',dirname(PUBLIC_PATH). "/");
-require_once ROOT . 'app/Autoloader.class.php';
-$persona = app\persona\Persona::singleton();
-$persona->listen();
+define('ROOTPATH',dirname(PUBLIC_PATH));
+require_once  '../app/Autoloader.class.php';
+\app\persona\Persona::getInstance()->run();
+
+

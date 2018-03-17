@@ -1,47 +1,23 @@
 <?php
 namespace app\persona\event\EventManager;
 
-/**
- * Interface for EventManager
- */
-interface EventManagerInterface
+class EventManager 
 {
-    /**
-     * Attaches a listener to an event
-     *
-     * @param string $event the event to attach too
-     * @param callable $callback a callable function
-     * @param int $priority the priority at which the $callback executed
-     * @return bool true on success false on failure
-     */
-    public function attach($event, $callback, $priority = 0);
+    public static $Priority = 10;
+    protected $_listeners = [];
+    protected $_eventList;
 
-    /**
-     * Detaches a listener from an event
-     *
-     * @param string $event the event to attach too
-     * @param callable $callback a callable function
-     * @return bool true on success false on failure
-     */
-    public function detach($event, $callback);
+    private $events = array();
 
-    /**
-     * Clear all listeners for a given event
-     *
-     * @param  string $event
-     * @return void
-     */
-    public function clearListeners($event);
+    public function attach($name, $callback) {
+        $this->events[$name][] = $callback;
+    }
 
-    /**
-     * Trigger an event
-     *
-     * Can accept an EventInterface or will create one if not passed
-     *
-     * @param  string|EventInterface $event
-     * @param  object|string $target
-     * @param  array|object $argv
-     * @return mixed
-     */
-    public function trigger($event, $target = null, $argv = []);
+    public function trigger($name, $params = array()) {
+        foreach ($this->events[$name] as $event => $callback) {
+            $e = new Event($name, $params);
+            $callback($e);
+        }
+    }
+
 }

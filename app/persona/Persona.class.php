@@ -1,37 +1,35 @@
 <?php
 namespace app\persona;
 
+
 use app\persona\route\Route;
-/**
- * Created by Prim'Meshia.
- * Datetime : 03/04/2017 12:09
- * file : persona.class.php
- * description :
- */
+
 class Persona extends core\Core
 {
-
-    private static $_instance = null;
-
-    public function __construct()
+    protected function __construct()
     {
-        parent::__construct();
-        $this->setTimezone();
-        $this->storeCoreObjects();
-        $this->loadRoute();
     }
-
-    public static function singleton()
+    private static $_instances = null;
+    public static function getInstance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new self();
+        if (self::$_instances === null) {
+            ob_start();
+            self::$_instances = new self();
         }
-        return self::$_instance;
+        return self::$_instances;
     }
-
     public function getRootDir()
     {
         return __DIR__;
+    }
+
+    public function run()
+    {
+        $this->init();
+        $this->setTimezone();
+        $this->loadRoute();
+        $this->listen();
+       
     }
     /**
      * @param $uri
@@ -39,6 +37,7 @@ class Persona extends core\Core
      * @param callable $callback
      * create route
      */
+
     public function createRoute($uri = '', $method, callable $callback)
     {
         if (is_array($method))
@@ -70,24 +69,26 @@ class Persona extends core\Core
         }
     }
 
-    /**
-     * @return bool
-     */
+  
     public function listen()
     {
-        $slugs = [];
-        $run = $this->router->traverseRoutes($this->request->getMethod(), $this->routes, $slugs);
-        if (!$run && (!isset($this->routes['RESPOND']) || empty($this->routes['RESPOND'])) && !$this->config->messages->e404) {
-            return $this->response->error("Route not found for Path: '{$this->request->getRequestedUri()}' with HTTP Method: '{$this->request->getMethod()}'. ", 404);
-        } else if (!$run && (isset($this->routes['RESPOND']) && !empty($this->routes['RESPOND']))) {
-            $callback = $this->routes['RESPOND'][0]->function;
-            call_user_func($callback);
-        } else if (!$run && $this->config->messages->e404) {
-            $this->response->error($this->config->messages->e404, 404);
+        if($this->config->system->maintenance){
+            $this->response->error($this->config->messages->e503, 503);
+        }else{
+            $slugs = [];
+            $run = $this->router->traverseRoutes($this->request->getMethod(), $this->routes, $slugs);
+            if (!$run && (!isset($this->routes['RESPOND']) || empty($this->routes['RESPOND'])) && !$this->config->messages->e404) {
+                return $this->response->error("Route not found for Path: '{$this->request->getRequestedUri()}' with HTTP Method: '{$this->request->getMethod()}'. ", 404);
+            } else if (!$run && (isset($this->routes['RESPOND']) && !empty($this->routes['RESPOND']))) {
+                $callback = $this->routes['RESPOND'][0]->function;
+                call_user_func($callback);
+            } else if (!$run && $this->config->messages->e404) {
+                $this->response->error($this->config->messages->e404, 404);
+            }
+            if ($this->config->debug && $this->config->debug == 2)
+                echo $this->profiler->display($this->btrace, $this->getCurrentEnv());
+            return true;
         }
-        if ($this->config->debug && $this->config->debug == 2)
-            echo $this->profiler->display($this->btrace);
-        return true;
     }
     public function getRoutes()
     {

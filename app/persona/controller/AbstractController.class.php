@@ -2,20 +2,20 @@
 
 namespace app\persona\controller;
 use app\persona\helpers\Helpers;
+use app\persona\Persona;
 class AbstractController{
-    protected $persona;
     protected $request;
     private $filename = '%s/view/%s';
     
-    public function __construct($persona){
-        $this->persona = $persona;
-        $this->request = $persona->getRequest();
-        $this->persona->view = 'app\\persona\\view\\View';
-        $this->filename = sprintf($this->filename, Helpers::getDirectory(get_called_class()),$persona->request->action);
+    public function __construct(){
+        $this->persona = Persona::getInstance();
+        $this->request = Persona::getInstance()->getRequest();
+        
+        $this->filename = sprintf($this->filename, Helpers::getDirectory(get_called_class()),Persona::getInstance()->request->action);
     }
     protected function render(array $vars = [])
     {
-        $this->persona->response->response($this->filename,$vars);
+        Persona::getInstance()->response->response($this->filename,$vars);
     }
     
 

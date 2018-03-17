@@ -1,9 +1,9 @@
 <?php
 namespace app\persona\database;
 use \PDO;
-class PdoDatabase extends Database{
+class PdoDB extends Database{
    
-    public function newConnection($config)
+    public function newConnection()
     {
         $dsn = 'mysql:host=' . $config->host . ';dbname=' . $config->dbname;
                 try{
@@ -34,7 +34,6 @@ class PdoDatabase extends Database{
 
         if( !$result )
         {
-           
             trigger_error('Error executing and caching query: '.$this->connections[$this->activeConnection]->errorInfo()[0], E_USER_ERROR);
             return -1;
         }

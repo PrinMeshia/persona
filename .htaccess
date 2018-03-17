@@ -15,10 +15,12 @@ Options -Indexes
 	deny from all
 </Files>
     Options +FollowSymLinks
-    RewriteEngine on
-    RewriteRule    ^$    approot/    [L]
-    RewriteCond %{REQUEST_URI} !\.(css|gif|ico|jpg|js|png|swf|txt|svg)$
-    RewriteRule    (.*) approot/$1    [L]
+	RewriteEngine On
+	RewriteRule ^/?$ approot/ [L]
+	RewriteCond %{REQUEST_URI} !\.(css|gif|ico|jpg|js|png|swf|txt|svg)$
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.+)$ approot/index.php?action=$1 [L,QSA]
 <IfModule mod_expires.c>
 	ExpiresActive On
 	ExpiresDefault "access plus 7200 seconds"

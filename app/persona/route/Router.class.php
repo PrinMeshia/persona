@@ -9,19 +9,13 @@
 namespace app\persona\route;
 
 
+use app\persona\Persona;
+
 class Router
 {
-    private $persona;
-    public function __construct($persona){
-        $this->persona = $persona;
+    public function __construct(){
     }
-      /**
-         * @param $uri
-         * @param $method (GET,POST,PUT,DELETE,RESPOND)
-         * @param callable $callback
-         * create route
-         */
-    
+
     public function traverseRoutes($method = 'GET', array $routes, array &$slugs){
         if (isset($routes[$method])){
             foreach($routes[$method] as $route)
@@ -33,12 +27,12 @@ class Router
         return false;
     }
     public  function getSegment($segment_number){
-        $uri = $this->persona->request->getRequestedUri();
+        $uri = Persona::getInstance()->request->getRequestedUri();
         $uri_segments = preg_split('/[\/]+/',$uri,null,PREG_SPLIT_NO_EMPTY);
         return isset($uri_segments[$segment_number]) ? $uri_segments[$segment_number] : false;
     }
     private function processUri($route, &$slugs = []){
-        $url = $this->persona->request->getRequestedUri();
+        $url = Persona::getInstance()->request->getRequestedUri();
         $uri = parse_url($url, PHP_URL_PATH);
         $func = $this->matchUriWithRoute($uri, $route, $slugs);
         return $func ? $func : false;

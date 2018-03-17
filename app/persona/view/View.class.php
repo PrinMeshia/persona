@@ -10,77 +10,55 @@
 
 namespace app\persona\View;
 
+use app\persona\Persona;
+
+
 class View
 {
     protected $data;
     protected $src;
-    private $persona;
     private $viewPath;
-    private $templateExt = '.tpl';
     private $layout;
     private $reservedVariables = ['siteDetail', 'body'];
-    public function __construct($persona)
+    private $tpl;
+    public function __construct()
     {
-        $this->persona = $persona;
-        $this->layout = ROOT . $persona->config->layout->path . $this->templateExt;
+        $this->layout = ROOT . Persona::getInstance()->config->layout->path . Persona::getInstance()->config->system->template_ext;
+       
     }
     public function load($view, array $vars = [])
     {
+        $this->tpl =  Persona::getInstance()->template;
+        $this->tpl->constantAssign('imgpath',Persona::getInstance()->config->path->public_img);
+        $this->tpl->constantAssign('csspath',Persona::getInstance()->config->path->public_css);
+        $this->tpl->constantAssign('jspath',Persona::getInstance()->config->path->public_js);
+        foreach (Persona::getInstance()->config->website as $key => $value) {
+            $this->tpl->constantAssign('site_' . $key ,$value);
+        }
         $vars = $this->validateVariables($vars);
-        $urlView = ROOT . $view . $this->templateExt;
-
-        //$this->persona->template->assign($vars);
-         //extract($vars, EXTR_OVERWRITE);
+        $urlView = ROOT . $view . Persona::getInstance()->config->system->template_ext;
         if (file_exists($urlView)) {
-            $baseView = file_get_contents($this->layout);
-            $body = file_get_contents($urlView);
-            $page = str_replace('[body]', $body, $baseView);
-            foreach ($this->persona->config->website as $key => $value) {
-                $page = str_replace('[site_' . $key . ']', $value, $page);
-            }
             foreach ($vars as $key => $value) {
-                $page = str_replace('[' . $key . ']', $value, $page);
+                $this->tpl->assign($key ,$value);
             }
-            echo ($page);
-             
-        //     if ($template) {
-        //         require($urlView);
-        //         $content = ob_get_clean();
-        //         $this->persona->template->assign('content', $content);
-        //         $this->persona->template->parse(VIEWPATH . 'template/' . $template . '.phtml');
-        //          //require(VIEWPATH . 'template/' . $template . '.phtml');
-        //     } else {
-        //         require($urlView);
-        //     }
+            $body = $this->tpl->render($urlView);
+            $this->tpl->assign("body",$body);
+            echo ($this->tpl->render($this->layout));
         } else {
-            if ($this->persona->config->debug && $this->persona->config->debug == 2)
-                return $this->persona->response->error("View filename '{$view}{$this->templateExt}' not found", 409);
+            if (Persona::getInstance()->config->debug && Persona::getInstance()->config->debug == 2)
+                return Persona::getInstance()->response->error("View filename '{$view}".Persona::getInstance()->config->system->template_ext."' not found", 409);
             else
-                return $this->persona->response->error('', 409);
+                return Persona::getInstance()->response->error('', 409);
         }
     }
     private function validateVariables(array $variables = [])
     {
         foreach ($variables as $name => $value) {
             if (in_array($name, $this->reservedVariables)) {
-                return $this->persona->response->error("Unacceptable view variable given: '{$name}'", 409);
+                return Persona::getInstance()->response->error("Unacceptable view variable given: '{$name}'", 409);
             }
         }
-
-
         return $variables;
-    }
-    private function assign()
-    {
-        
-    }
-    private function render()
-    {
-        
-    }
-    private function parse()
-    {
-        
     }
 
 }

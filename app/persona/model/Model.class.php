@@ -1,12 +1,9 @@
 <?php 
-namespace app\persona\database;
-use database;
-use QueryBuilder;
-
+namespace app\persona\model;
 /**
  * 
  */
-class Table 
+class Model 
 {
 	protected $table;
 	protected $db;
