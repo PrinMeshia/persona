@@ -50,6 +50,10 @@
     "layout": {
         "path": "{path.public_tpl}default"
     },
+    "cache":{
+        "expiration" : "3600",
+        "extension" : ".cache"
+    },
     "class":{
         "cache" : "app\\persona\\cache\\Cache",
         "abstractcontroller" : "app\\persona\\controller\\AbstractController",

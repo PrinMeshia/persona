@@ -62,7 +62,7 @@ class Template
 		$content = preg_replace("#\[\s*replace_special([^\]]+)\}#", "<?= preg_replace('/[^a-zA-Z1-9]+/', '', $1);?>", $content);
 		$content = str_replace('[#', '<?= $', $content);
         $content = str_replace(array("]", "["), array("?>", "<?php "), $content);
-        $tmpfile = ROOT.Persona::getInstance()->config->path->cache.basename($tpl).'-'.md5(time()).rand(0,100).'.php';
+        $tmpfile = ROOT.Persona::getInstance()->config->path->tmp.basename($tpl).'-'.md5(time()).rand(0,100).'.php';
         file_put_contents($tmpfile, $content);
         require_once($tmpfile);
         $rendered = ob_get_contents();
