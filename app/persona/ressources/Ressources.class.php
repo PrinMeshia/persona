@@ -6,6 +6,8 @@
     class Ressources 
     {
         private $_path = [];
+        private $_cssMeta = "<link rel='stylesheet' type='text/css' href='$1'/>\n";
+        private $_jsMeta = "<script type='text/javascript' src='$1'></script> \n";
         public function __construct()
         {
             $this->_path["js"] = [];
@@ -24,39 +26,25 @@
         private function getListFile($dirname,$ext){
             return glob($dirname.'*.'.$ext);
         }
-        public function loadJsFile(){
-            $ArrayJs = [];
+        private function loadFile($type,$meta){
+            $temp = [];
             $html = '';
-            foreach ( $this->_path["js"] as $key => $value) {
-                array_push($ArrayJs,$this->getListFile($value,"js"));
+            foreach ( $this->_path[$type] as $key => $value) {
+                array_push($temp,$this->getListFile($value,$type));
             }
-            foreach ($ArrayJs as $key => $value) {
+            foreach ($temp as $key => $value) {
                 foreach ($value as $file) {
-                    
-                    $html .= "<script type='text/javascript' src='".str_replace(ROOT, "", $file)."'></script> \n";
+                    if(is_readable($file))
+                        $html .= str_replace("$1",str_replace(ROOT, "", $file),$meta);
                 }
-                
             }
             return $html;
-            
-
+        }
+        public function loadJsFile(){
+            return $this->loadFile("js",$this->_jsMeta);
         }
         public function loadCssFile(){
-            $ArrayCss = [];
-            $html = '';
-            foreach ( $this->_path["css"] as $key => $value) {
-                array_push($ArrayCss,$this->getListFile($value,"css"));
-            }
-            
-            foreach ($ArrayCss as $key => $value) {
-                foreach ($value as $file) {
-                    $html .= "<link rel='stylesheet' type='text/css' href='".str_replace(ROOT, "", $file)."'/>\n";
-                }
-               
-            }
-            return $html;
-            
+            return $this->loadFile("css",$this->_cssMeta);
         }
-
     }
     
