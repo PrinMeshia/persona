@@ -8,8 +8,10 @@
     <meta name="keywords" content="[#site_keywords]">
     <meta name="author" content="[#site_author]">
     <title>[#site_title]</title>
+    [#cssfile]
 </head>
 <body>
     [#body]
+    [#jsfile]
 </body>
 </html>

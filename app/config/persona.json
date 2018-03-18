@@ -19,6 +19,7 @@
     },
     "path": {
         "tmp": "/tmp/",
+        "cache": "{path.tmp}cache/",
         "vendor": "{fixedpath.app}vendor/",
         "module": "{fixedpath.src}module/",
         "model": "{fixedpath.src}model/",
@@ -65,7 +66,8 @@
         "environment" : "app\\persona\\config\\Environment",
         "database" : "app\\persona\\database\\Database",
         "pdo" : "app\\persona\\database\\PdoDB",
-        "querybuilder" : "app\\persona\\database\\QueryBuilder"
+        "querybuilder" : "app\\persona\\database\\QueryBuilder",
+        "ressources" : "app\\persona\\ressources\\Ressources"
     }
 
 

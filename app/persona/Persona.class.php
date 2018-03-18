@@ -22,7 +22,9 @@ class Persona extends core\Core
     {
         return __DIR__;
     }
-
+    public function redirect(){
+        header('Location: /'); 
+    }
     public function run()
     {
         $this->init();
@@ -73,7 +75,12 @@ class Persona extends core\Core
     public function listen()
     {
         if($this->config->system->maintenance){
-            $this->response->error($this->config->messages->e503, 503);
+            if($_SERVER['REQUEST_URI'] == '/'){
+                $this->response->error($this->config->messages->e503, 503);
+            }else{
+                $this->redirect();
+            }
+            
         }else{
             $slugs = [];
             $run = $this->router->traverseRoutes($this->request->getMethod(), $this->routes, $slugs);

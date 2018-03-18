@@ -24,14 +24,13 @@ class View
     public function __construct()
     {
         $this->layout = ROOT . Persona::getInstance()->config->layout->path . Persona::getInstance()->config->system->template_ext;
-       
+        Persona::getInstance()->ressources->assignCssfolder(Persona::getInstance()->config->path->public_css);
+        Persona::getInstance()->ressources->assignJsfolder(Persona::getInstance()->config->path->public_js);
     }
     public function load($view, array $vars = [])
     {
         $this->tpl =  Persona::getInstance()->template;
         $this->tpl->constantAssign('imgpath',Persona::getInstance()->config->path->public_img);
-        $this->tpl->constantAssign('csspath',Persona::getInstance()->config->path->public_css);
-        $this->tpl->constantAssign('jspath',Persona::getInstance()->config->path->public_js);
         foreach (Persona::getInstance()->config->website as $key => $value) {
             $this->tpl->constantAssign('site_' . $key ,$value);
         }
@@ -42,6 +41,8 @@ class View
                 $this->tpl->assign($key ,$value);
             }
             $body = $this->tpl->render($urlView);
+            $this->tpl->assign("cssfile",Persona::getInstance()->ressources->loadCssFile());
+            $this->tpl->assign("jsfile",Persona::getInstance()->ressources->loadJsFile());
             $this->tpl->assign("body",$body);
             echo ($this->tpl->render($this->layout));
         } else {
