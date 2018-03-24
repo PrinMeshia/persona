@@ -12,6 +12,7 @@ class AbstractController{
     public function __construct(){
         $action = isset(Persona::getInstance()->request->p)?Persona::getInstance()->request->p:"index";
         $this->persona = Persona::getInstance();
+        $this->reponse = Persona::getInstance()->response;
         $this->request = Persona::getInstance()->getRequest();
         $this->filename = sprintf($this->filename, Helpers::getDirectory(get_called_class()),$action);
         $this->csspath = sprintf($this->csspath, Helpers::getDirectory(get_called_class()),$action);
@@ -21,7 +22,7 @@ class AbstractController{
     {
         Persona::getInstance()->ressources->assignCssFile($this->csspath);
         Persona::getInstance()->ressources->assignJsFile($this->jspath);
-        Persona::getInstance()->response->response($this->filename,$vars);
+        $this->reponse->response($this->filename,$vars);
     }
     
 

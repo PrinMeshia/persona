@@ -40,7 +40,7 @@
             <li><a href="/">Home</a></li>
         </ul>
         <ul id="mobileParam">
-            <li id="mobilePushBtn">Notification</li>
+            <li id="mobilePushBtn" class="inactive">Notification</li>
         </ul>
         <div id="mobileFooter"> <a href="https://github.com/PrinMeshia" target="_blank">[$site_title]</a> - [= date("Y")] </div>
     </div>

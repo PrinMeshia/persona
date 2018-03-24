@@ -2,9 +2,9 @@
 /**
  * 
  */
-namespace src\module\test;
+namespace src\module\index;
 use app\persona\controller\AbstractController;
-class Test extends AbstractController
+class Index extends AbstractController
 {
     public function indexAction(){
         return parent::render();
@@ -27,5 +27,18 @@ class Test extends AbstractController
                 "part" => "test page via template"
             ]
         );
+    }
+    public function pushRegisterAction(){
+        $content = $this->request->getBody();
+        $data = json_decode($content);
+        $this->reponse->JsonResponse($data);
+        // if (isset($data->endpoint)){
+        //     $endpoint = $data->endpoint;
+        // }else{
+        //     throw new Exception('couldnt find endpoint');
+        // }
+
+        //Association de l'utilisateur courant au endpoint
+        //$this->notificationService->registerUser($this->userService->getLoggedUser(), $endpoint);
     }
 }

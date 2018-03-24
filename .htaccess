@@ -16,6 +16,9 @@ Options -Indexes
 </Files>
     Options +FollowSymLinks
 	RewriteEngine On
+	RewriteEngine On
+	RewriteCond %{HTTPS} off
+	RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
 	RewriteRule ^/?$ approot/ [L]
 	RewriteCond %{REQUEST_URI} !\.(css|gif|ico|jpg|js|png|swf|txt|svg)$
 	RewriteCond %{REQUEST_FILENAME} !-f

@@ -1,8 +1,9 @@
 {
     "routes": [
-        { "route": "/", "method": ["GET"], "action": "Test#index" },
-        { "route": "/guide", "method": ["GET"], "action": "Test#guide" },
-        { "route": "/persona/", "method": ["GET"], "action": "Test#index" },
-        { "route": "/persona/guide", "method": ["GET"], "action": "Test#test" }
+        { "route": "/", "method": ["GET"], "action": "Index#index" },
+        { "route": "/guide", "method": ["GET"], "action": "Index#guide" },
+        { "route": "/register-to-notification", "method": ["POST"], "action": "Index#pushRegister" },
+        { "route": "/persona/", "method": ["GET"], "action": "Index#index" },
+        { "route": "/persona/guide", "method": ["GET"], "action": "Index#test" }
     ]
 }

@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	'use strict';
 	/* ITEM */
 	var overLay = document.querySelector('#overlay');
@@ -18,11 +18,11 @@
 	var xhr = new XMLHttpRequest();
 	/* FUNCTION*/
 	function hasClass(element, cls) {
-		return(' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+		return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
 	}
 
 	function updateNetworkStatus() {
-		if(navigator.onLine) {
+		if (navigator.onLine) {
 			mobNav.classList.add('app__offline');
 			header.classList.remove('app__offline');
 		} else {
@@ -32,55 +32,80 @@
 		}
 	}
 	/* listenner */
-	document.addEventListener('DOMContentLoaded', function(event) {
+	document.addEventListener('DOMContentLoaded', function (event) {
 		//On initial load to check connectivity
-		if(!navigator.onLine) updateNetworkStatus();
+		if (!navigator.onLine) updateNetworkStatus();
 		window.addEventListener('online', updateNetworkStatus, false);
 		window.addEventListener('offline', updateNetworkStatus, false);
 	});
-	hamBtn.addEventListener('click', function() {
-		if(hasClass(document.body, 'navigation')) document.body.classList.remove('navigation');
+	hamBtn.addEventListener('click', function () {
+		if (hasClass(document.body, 'navigation')) document.body.classList.remove('navigation');
 		else document.body.classList.add('navigation');
 		hambtnClick = !hambtnClick;
 	}, false);
-	overLay.addEventListener('click', function() {
+	overLay.addEventListener('click', function () {
 		document.body.classList.remove('navigation');
 		hambtnClick = !hambtnClick;
 	}, false);
-	mobilePushBtn.addEventListener('click', function() {
-		if(isSubscribed) {
+	mobilePushBtn.addEventListener('click', function () {
+		if (isSubscribed) {
 			unsubscribe();
 		} else {
 			subscribe();
 		}
 	}, false);
-	window.onresize = function() {
-		if((window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) > 768) document.body.classList.remove('navigation');
+	window.onresize = function () {
+		if ((window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) > 768) document.body.classList.remove('navigation');
 		else {
-			if(hambtnClick) document.body.classList.add('navigation');
+			if (hambtnClick) document.body.classList.add('navigation');
 		}
 	};
 	/* Navigation Mobile swift*/
-	hammertime.on('swipeleft', function() {
+	hammertime.on('swipeleft', function () {
 		document.body.classList.remove('navigation');
 	});
-	hammertime.on('swiperight', function() {
+	hammertime.on('swiperight', function () {
 		document.body.classList.add('navigation');
 	});
 	/*serviceWorker*/
-	if('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('./sw.js', {
-			scope: './'
-		}).then(function(SWReg) {
+
+	function subscribeDevice() {
+		navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+			// Demande d'inscription au Push Server (1)
+			return serviceWorkerRegistration.pushManager.subscribe({ userVisibleOnly: true });
+		}).then(function (subscription) {
+			//sauvegarde de l'inscription dans le serveur applicatif (2)
+			fetch('/register-to-notification', {
+				method: 'post',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				credentials: 'same-origin',
+				body: JSON.stringify(subscription)
+			}).then(function (response) {
+				return response.json();
+			}).catch(function (err) {
+				console.log('Could not register subscription into app server', err);
+			});
+		}).catch(function (subscriptionErr) {
+			// Check for a permission prompt issue
+			console.log('Subscription failed ' + subscriptionErr);
+		});
+	}
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('./sw.js').then(function (SWReg) {
+			console.log('Registration succeeded. Scope is ' + SWReg.scope);
 			registry = SWReg;
+			subscribeDevice();
 			console.log('Service worker registered!');
-		}).catch(function(error) {
+		}).catch(function (error) {
 			console.log('There was an error! ' + error);
 		});
 	}
 	/* XHR */
 	function callApi(action, value, callback) {
 		var path = action;
-		if(typeof value != undefined) path += '/' + value;
+		if (typeof value != undefined) path += '/' + value;
 	}
 })();
