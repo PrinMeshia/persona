@@ -3,7 +3,7 @@
         "title": "Persona Framewok",
         "description": "Persona Framewok",
         "version": "1.0.0",
-        "author": "Prin-Meshia",
+        "author": "Prin'Meshia",
         "lang": "fr-FR",
         "keywords": ""
     },
@@ -33,10 +33,6 @@
         "public_css" : "{path.asset}css/",
         "public_img" : "{path.asset}img/"
     },
-    "namespace": {
-        "src": "src\\",
-        "module": "{namespace.src}module\\"
-    },
     "routing": {
         "path": "{path.config}route.json"
     },
@@ -45,7 +41,9 @@
     },
     "messages": {
         "e404": "La page que vous recherchez n'hesiste pas",
-        "e503": "Site en construction"
+        "soon": "Site en construction",
+        "maintenance": "Site en maintenance"
+
     },
     "layout": {
         "path": "{path.public_tpl}default"

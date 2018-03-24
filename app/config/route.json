@@ -1,8 +1,8 @@
 {
     "routes": [
         { "route": "/", "method": ["GET"], "action": "Test#index" },
-        { "route": "/test", "method": ["GET"], "action": "Test#test" },
+        { "route": "/guide", "method": ["GET"], "action": "Test#guide" },
         { "route": "/persona/", "method": ["GET"], "action": "Test#index" },
-        { "route": "/persona/test", "method": ["GET"], "action": "Test#test" }
+        { "route": "/persona/guide", "method": ["GET"], "action": "Test#test" }
     ]
 }

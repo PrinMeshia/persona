@@ -45,10 +45,9 @@ class View
             $this->tpl->assign("cssfile", Persona::getInstance()->ressources->loadCssFile());
             $this->tpl->assign("jsfile", Persona::getInstance()->ressources->loadJsFile());
             $this->tpl->assign("body", $body);
-
             echo ($this->tpl->render($this->layout));
         } else {
-            return $this->throwError("View filename '{$view}" . Persona::getInstance()->config->system->template_ext . "' not found", 409);
+            return Persona::getInstance()->response->error("View filename '{$view}" . Persona::getInstance()->config->system->template_ext . "' not found", 409);
         }
 
     }
@@ -56,17 +55,10 @@ class View
     {
         foreach ($variables as $name => $value) {
             if (in_array($name, $this->reservedVariables)) {
-                return $this->throwError("Unacceptable view variable given: '{$name}'", 409);
+                return Persona::getInstance()->response->error("Unacceptable view variable given: '{$name}'", 409);
             }
         }
         return $variables;
-    }
-    private function throwError($msg, $code)
-    {
-        if (Persona::getInstance()->config->debug && Persona::getInstance()->config->debug == 2)
-            return Persona::getInstance()->response->error($msg, $code);
-        else
-            return Persona::getInstance()->response->error('', $code);
     }
 
 }

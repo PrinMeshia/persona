@@ -60,7 +60,8 @@ class Template
 		$content = preg_replace("#\[\s*each([^\}]+)\]#", "<?php foreach($1):?>", $content);
 		$content = str_replace("[/each]", "<?php endforeach;?>", $content);
 		$content = preg_replace("#\[\s*replace_special([^\]]+)\}#", "<?= preg_replace('/[^a-zA-Z1-9]+/', '', $1);?>", $content);
-		$content = str_replace('[#', '<?= $', $content);
+        $content = str_replace('[=', '<?= ', $content);
+        $content = str_replace('[#', '<?= $', $content);
         $content = str_replace(array("]", "["), array("?>", "<?php "), $content);
         $tmpfile = ROOT.Persona::getInstance()->config->path->tmp.basename($tpl).'-'.md5(time()).rand(0,100).'.php';
         file_put_contents($tmpfile, $content);

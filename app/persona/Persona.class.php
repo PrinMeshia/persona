@@ -76,7 +76,7 @@ class Persona extends core\Core
     {
         if($this->config->system->maintenance){
             if($_SERVER['REQUEST_URI'] == '/'){
-                $this->response->error($this->config->messages->e503, 503);
+                $this->response->error($this->config->messages->soon, "soon");
             }else{
                 $this->redirect();
             }

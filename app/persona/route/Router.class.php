@@ -17,9 +17,11 @@ class Router
     }
 
     public function traverseRoutes($method = 'GET', array $routes, array &$slugs){
+       
         if (isset($routes[$method])){
             foreach($routes[$method] as $route)
                 if($func = $this->processUri($route, $slugs)){
+                    
                     call_user_func_array($func, $slugs);
                     return true;
                 }

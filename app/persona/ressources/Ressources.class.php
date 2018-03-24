@@ -6,16 +6,28 @@
     class Ressources 
     {
         private $_path = [];
-        private $_cssMeta = "<link rel='stylesheet' type='text/css' href='$1'/>\n";
-        private $_jsMeta = "<script type='text/javascript' src='$1'></script> \n";
+        private $_file = [];
+        private $_cssMeta = "<link rel='stylesheet' type='text/css' href='%s'/>\n";
+        private $_jsMeta = "<script type='text/javascript' src='%s'></script> \n";
         public function __construct()
         {
             $this->_path["js"] = [];
             $this->_path["css"] = [];
+            $this->_file["js"] = [];
+            $this->_file["css"] = [];
         }
         private function assignRessourceFolder($dirName,$type){
             if(is_dir(ROOT.$dirName))
                 array_push($this->_path[$type],ROOT.$dirName);
+        }
+        private function assignRessourceFile($file,$type){
+            array_push($this->_file[$type],ROOT.$file);
+        }
+        public function assignJsFile($file){
+            $this->assignRessourceFile($file,"css");
+        }
+        public function assignCssFile($file){
+            $this->assignRessourceFile($file,"css");
         }
         public function assignCssfolder($dirName){
             $this->assignRessourceFolder($dirName,"css");
@@ -35,8 +47,12 @@
             foreach ($temp as $key => $value) {
                 foreach ($value as $file) {
                     if(is_readable($file))
-                        $html .= str_replace("$1",str_replace(ROOT, "", $file),$meta);
+                        $html .= sprintf($meta, str_replace(ROOT, "", $file));
                 }
+            }
+            foreach ($this->_file[$type] as $file) {
+                if(is_readable($file))
+                    $html .= sprintf($meta, str_replace(ROOT, "", $file));
             }
             return $html;
         }

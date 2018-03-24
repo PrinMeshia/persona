@@ -193,8 +193,8 @@ class Profiler
      */
 	public static function displayCssJavascript()
 	{
-		echo "<style type=\"text/css\">" . file_get_contents(dirname(__FILE__) . '/rsc/css/profiler.css') . '</style>';
-		echo "<script type=\"text/javascript\">" . file_get_contents(dirname(__FILE__) . '/rsc/js/profiler.js') . '</script>';
+		echo "<style type=\"text/css\">" . file_get_contents(__DIR__ . '/rsc/css/profiler.css') . '</style>';
+		echo "<script type=\"text/javascript\">" . file_get_contents(__DIR__ . '/rsc/js/profiler.js') . '</script>';
 	}
 
 
@@ -202,7 +202,7 @@ class Profiler
 	{
 		ob_start();
 		extract($var);
-		require(dirname(__FILE__) . '/Profiler.phtml');
+		require( __DIR__.'/Profiler.phtml');
 		self::displayCssJavascript();
 		return ob_get_clean();
 	}

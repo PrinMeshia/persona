@@ -55,13 +55,13 @@ class Response
         }
     }
     public function error($msg = '', $number = 0){
-        $status = Persona::getInstance()->setStatusCode($number);
-        $filename = 'e'.$number;
+        $status = Persona::getInstance()->setStatusCode(is_numeric($number)?$number:0);
+        $filename = $number;
         $filepath = Persona::getInstance()->config->path->code_info.$filename;
         $vars = [];
-       if (Persona::getInstance()->config->debug && Persona::getInstance()->config->debug == 2){
+       if (isset(Persona::getInstance()->config->debug) && Persona::getInstance()->config->debug == 2){
             $vars['exception'] = new \Exception($msg);
-            $vars['note'] = "Routes begin always with '/' character.";
+            $vars['note'] = $msg;
         }
         
         if(file_exists(ROOT.$filepath.Persona::getInstance()->config->system->template_ext))
