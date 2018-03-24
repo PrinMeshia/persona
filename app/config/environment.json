@@ -5,6 +5,6 @@
     },
     "planethoster": {
         "ip": ["persona.yj.fr"],
-        "dns": ["http://persona.yj.fr"]
+        "dns": ["http://persona.yj.fr","https://persona.yj.fr"]
     }
 }

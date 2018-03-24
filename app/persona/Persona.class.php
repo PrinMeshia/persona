@@ -101,4 +101,7 @@ class Persona extends core\Core
     {
         return $this->routes;
     }
+    public function generateRoute($uri){
+        return ($this->config->root) ?($this->config->root.$uri) : $uri;
+    }
 }

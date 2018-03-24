@@ -10,8 +10,9 @@
     "system": {
         "language": "fr-fr",
         "timezone": "Europe/Paris",
-        "maintenance" : true,
-        "template_ext" : ".tpl"
+        "maintenance" : false,
+        "template_ext" : ".tpl",
+        "error_template_include" : false
     },
     "fixedpath":{
         "app": "/app/",
@@ -39,6 +40,10 @@
     "userparam": {
         "path": "{path.config}user.json"
     },
+    "namespace": {
+        "src": "src\\",
+        "module": "{namespace.src}module\\"
+},
     "messages": {
         "e404": "La page que vous recherchez n'hesiste pas",
         "soon": "Site en construction",

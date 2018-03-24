@@ -28,7 +28,7 @@ class View
         Persona::getInstance()->ressources->assignJsfolder(Persona::getInstance()->config->path->public_js);
     }
 
-    public function load($view, array $vars = [])
+    public function load($view, array $vars = [],$template=true)
     {
         $this->tpl = Persona::getInstance()->template;
         $this->tpl->constantAssign('imgpath', Persona::getInstance()->config->path->public_img);
@@ -38,14 +38,19 @@ class View
         $vars = $this->validateVariables($vars);
         $urlView = ROOT . $view . Persona::getInstance()->config->system->template_ext;
         if (file_exists($urlView)) {
-            foreach ($vars as $key => $value) {
-                $this->tpl->assign($key, $value);
-            }
-            $body = $this->tpl->render($urlView);
-            $this->tpl->assign("cssfile", Persona::getInstance()->ressources->loadCssFile());
-            $this->tpl->assign("jsfile", Persona::getInstance()->ressources->loadJsFile());
-            $this->tpl->assign("body", $body);
-            echo ($this->tpl->render($this->layout));
+            if($template){
+                foreach ($vars as $key => $value) {
+                    $this->tpl->assign($key, $value);
+                }
+            
+                $body = $this->tpl->render($urlView);
+                $this->tpl->assign("cssfile", Persona::getInstance()->ressources->loadCssFile());
+                $this->tpl->assign("jsfile", Persona::getInstance()->ressources->loadJsFile());
+                $this->tpl->assign("body", $body);
+                echo ($this->tpl->render($this->layout));
+            }else
+                require $urlView;
+           
         } else {
             return Persona::getInstance()->response->error("View filename '{$view}" . Persona::getInstance()->config->system->template_ext . "' not found", 409);
         }

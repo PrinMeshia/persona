@@ -1,0 +1,41 @@
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="0.990276in" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+								version="1.1" viewBox="0 0 130 130" width="0.991323in" xml:space="preserve">
+					<defs>
+						<style type="text/css">
+							.str0 {
+                                stroke: #ffffff;
+                                stroke-width: 0.911658
+                            }
+
+                            .fil1 {
+                                fill: #ffffff
+                            }
+
+                            .fil0 {
+                                fill: #ffffff;
+                                fill-rule: nonzero
+                            }
+						</style>
+					</defs>
+					<g id="Layer_x0020_1">
+						<g id="_298678432">
+							<g>
+								<path class="fil0" d="M22 81c0,0 0,-1 0,-1l1 -8 -1 -9c0,0 0,0 0,0 0,0 -1,0 -1,0l-1 9 1 8c0,0 1,1 1,1z" />
+								<path class="fil0" d="M18 77c0,0 1,0 1,0l1 -5 -1 -6c0,0 -1,0 -1,0 0,0 0,0 0,0l-1 6 1 5c0,0 0,0 0,0z" />
+								<path class="fil0" d="M26 61c0,0 0,0 0,0 -1,0 -1,0 -1,0l-1 11 1 10c0,0 0,0 1,0 0,0 0,0 0,0l1 -10 -1 -11z" />
+								<path class="fil0" d="M29 83c1,0 1,-1 1,-1l1 -10 -1 -11c0,0 0,0 -1,0 0,0 0,0 0,0l-1 11 1 10c0,0 0,1 0,1z" />
+								<path class="fil0" d="M33 83c1,0 1,-1 1,-1l0 0 1 -10 -1 -10c0,-1 0,-1 -1,-1 0,0 0,0 0,1l-1 10 1 10c0,0 0,1 0,1z" />
+								<path class="fil0" d="M39 72l-1 -16c0,-1 -1,-1 -1,-1 0,0 -1,0 -1,1l0 16 0 10c0,0 1,1 1,1 0,0 1,-1 1,-1l0 0 1 -10z" />
+								<path class="fil0" d="M41 83c0,0 1,-1 1,-1l0 0 1 -10 -1 -20c0,0 -1,-1 -1,-1 0,0 -1,1 -1,1l-1 20 1 10c0,0 1,1 1,1z" />
+								<path class="fil0" d="M45 50c-1,0 -1,0 -1,0l-1 22 1 10c0,0 0,1 1,1 0,0 1,-1 1,-1l0 0 0 -10 0 -22c0,0 -1,0 -1,0z" />
+								<path class="fil0" d="M49 83c0,0 1,-1 1,-1l0 0 0 -10 0 -22c0,-1 -1,-1 -1,-1 -1,0 -1,0 -1,1l-1 22 1 10c0,0 0,1 1,1z" />
+								<path class="fil0" d="M53 83c0,0 1,-1 1,-1l0 0 0 -10 0 -22c0,0 -1,-1 -1,-1 -1,0 -1,1 -1,1l-1 22 1 10c0,0 0,1 1,1z" />
+								<path class="fil0" d="M58 72l0 -21c0,-1 -1,-1 -1,-1 -1,0 -1,0 -1,1l-1 21 1 10c0,0 0,1 1,1 0,0 1,-1 1,-1l0 0 0 -10z" />
+								<path class="fil0" d="M61 83c0,0 1,-1 1,-1l0 0 1 -10 -1 -25c0,-1 -1,-1 -1,-1 -1,0 -1,0 -1,1l-1 25 1 10c0,0 0,1 1,1z" />
+								<path class="fil0" d="M65 44c-1,0 -1,0 -1,1l-1 27 1 9c0,1 0,2 1,2 1,0 1,-1 1,-2l0 0 1 -9 -1 -27c0,-1 0,-1 -1,-1z" />
+								<path class="fil0" d="M69 83c0,0 32,0 32,0 7,0 12,-5 12,-12 0,-7 -5,-12 -12,-12 -1,0 -3,0 -4,1 -1,-11 -10,-19 -21,-19 -3,0 -5,0 -8,1 -1,1 -1,1 -1,2l0 37c0,1 1,2 2,2z"
+								/> </g>
+							<path class="fil1 str0" d="M130 65c-1,36 -29,65 -65,65 -36,0 -65,-29 -65,-65 0,-36 29,-65 65,-65l65 0 0 65 0 0zm-65 -58c32,0 58,26 58,58l0 0c0,32 -26,58 -58,58 -32,0 -58,-26 -58,-58 0,-32 26,-58 58,-58z"
+							/> </g>
+					</g>
+				</svg>

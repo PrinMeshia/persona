@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.65 27.12">
+                <defs>
+                    <style>
+                        .cls-icon31,
+                        .cls-icon32 {
+                            fill: none;
+                            stroke: #52527a;
+                            stroke-linecap: round;
+                            stroke-linejoin: round;
+                        }
+                        .cls-icon31 {}
+                        .cls-icon32 {}
+                    </style>
+                </defs>
+                <path class="cls-icon31" d="M946.72,40H959a4.29,4.29,0,0,1-4.29-4.29V30a8,8,0,1,0-16,0v5.77A4.29,4.29,0,0,1,934.45,40h12.27Z"
+                      transform="translate(-933.9 -19.45)" />
+                <line class="cls-icon31" x1="12.82" y1="2.55" x2="12.82" y2="0.55" />
+                <path class="cls-icon32" d="M950.39,42.3a3.71,3.71,0,1,1-7.41,0Z" transform="translate(-933.9 -19.45)" /> </svg>

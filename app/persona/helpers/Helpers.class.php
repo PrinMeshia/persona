@@ -5,11 +5,11 @@ class Helpers
     /**
      * @return string
      */
-    public static function getAddressServer()
+    public static function getAddressServer($withport = true)
     {
         $port = $_SERVER['SERVER_PORT'];
         $http = "http";
-        if ($port == "80") {
+        if ($port == "80" || !$withport) {
             $port = "";
         }
         if (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {

@@ -1,0 +1,100 @@
+@import url(//fonts.googleapis.com/css?family=Indie+Flower);
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+@import url(//fonts.googleapis.com/css?family=Titillium+Web:300);
+
+* { box-sizing: border-box; }
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+	padding: 0;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+  font-family: 'Indie Flower', sans-serif;
+  font-weight:100;
+  color:#000;
+  /*overflow-y:hidden;*/
+  background: url(../img/bg.png) no-repeat #fff;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+body svg {
+  stroke-width:1px!important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+#container h1,
+#container h2,
+#container h3,
+#container h4,
+#container h5,
+#container h6 {
+  color: #363636;
+  font-weight: 400;
+  line-height: 1.125;
+}
+#container h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+
+#container h1:not(:first-child) {
+  margin-top: 1em;
+}
+#container{
+  display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    
+}
+ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.mobtitle{
+		display: none;
+	}
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
+}

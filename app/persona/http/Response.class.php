@@ -25,14 +25,11 @@ class Response
         Persona::getInstance()->btrace = ob_end_clean();
        
     }
-    public function Response($filename = '', array $vars = [], $status = 200, array $headers = [],$asText = 0){
+    public function Response($filename = '', array $vars = [], $status = 200, array $headers = [],$asText = 0,$insert = true){
         $this->clearEntry();
-        Persona::getInstance()->setStatusCode($status);
-        if (count($headers)){
-            $this->addCustomHeaders($headers);
-        }
+        Persona::getInstance()->setStatusCode(is_numeric($status)?$status:200);
         if (!$asText){
-            Persona::getInstance()->view->load($filename, $vars, $this);
+            Persona::getInstance()->view->load($filename, $vars, $insert);
         }
         else 
             echo $filename;
@@ -55,7 +52,7 @@ class Response
         }
     }
     public function error($msg = '', $number = 0){
-        $status = Persona::getInstance()->setStatusCode(is_numeric($number)?$number:0);
+        
         $filename = $number;
         $filepath = Persona::getInstance()->config->path->code_info.$filename;
         $vars = [];
@@ -65,7 +62,7 @@ class Response
         }
         
         if(file_exists(ROOT.$filepath.Persona::getInstance()->config->system->template_ext))
-            $this->Response($filepath,$vars,$number);
+            $this->Response($filepath,$vars,$number,[],0,Persona::getInstance()->config->system->error_template_include);
         else{
             $this->ResponseHTML($msg, $number);
         }

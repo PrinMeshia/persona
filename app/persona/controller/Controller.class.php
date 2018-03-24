@@ -18,6 +18,7 @@ class Controller{
     public function call($module, $action = "index",$vars = [])
     {
         $str = Persona::getInstance()->config->namespace->module.strtolower($module).'\\'.ucfirst(strtolower($module));
+        var_dump($str);
         if (class_exists($str) ) {
             $this->_controller = new $str();
             $this->_action = $action.'Action';

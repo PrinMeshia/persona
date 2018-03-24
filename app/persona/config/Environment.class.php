@@ -6,13 +6,14 @@ class Environment {
     public function __construct(){}
     
     public function setEnvironment($filename){
-   
+       
         if (file_exists(ROOT.$filename)) {
             $content = file_get_contents(ROOT.$filename);
             $content = json_decode($content, true);
+
             foreach ($content as $key => $value) {
                 foreach ($value as $arrayAddress) {
-                    if(array_search(Helpers::getUrlServer(),$arrayAddress) !== false || array_search(Helpers::getAddressServer(),$arrayAddress) !== false){
+                    if(array_search(Helpers::getUrlServer(),$arrayAddress) !== false || array_search(Helpers::getAddressServer(false),$arrayAddress) !== false){
                         Persona::getInstance()->setCurrentEnv($key);
                     }
                 }

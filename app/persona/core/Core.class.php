@@ -65,10 +65,7 @@ abstract class Core
         return $status;
     }
     public function setTimezone(){
-        if($this->config->system->timezone)
-            date_default_timezone_set($this->config->system->timezone);
-        else
-            date_default_timezone_set("UTC");
+        date_default_timezone_set($this->config->system->timezone ? $this->config->system->timezone : "UTC" );
     }
     public function setCurrentEnv($env){
         $this->_env = $env;
