@@ -7,6 +7,7 @@
     <meta name="description" content="[$site_description]">
     <meta name="keywords" content="[$site_keywords]">
     <meta name="author" content="[$site_author]">
+    <link rel="manifest" href="/manifest.webmanifest">
     <title>[$site_title] [$page_title] </title>
       [$cssfile]
 </head>

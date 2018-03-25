@@ -51,7 +51,14 @@
 		if (isSubscribed) {
 			unsubscribe();
 		} else {
-			subscribe();
+			subscribeDevice();
+		}
+	}, false);
+	pnBtn.addEventListener('click', function () {
+		if (isSubscribed) {
+			unsubscribe();
+		} else {
+			subscribeDevice();
 		}
 	}, false);
 	window.onresize = function () {
@@ -93,15 +100,18 @@
 			console.log('Subscription failed ' + subscriptionErr);
 		});
 	}
+
 	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.register('./sw.js').then(function (SWReg) {
-			console.log('Registration succeeded. Scope is ' + SWReg.scope);
-			registry = SWReg;
-			subscribeDevice();
-			console.log('Service worker registered!');
-		}).catch(function (error) {
-			console.log('There was an error! ' + error);
-		});
+		if (navigator.serviceWorker.controller) {
+			console.log('Service worker found, no need to register')
+		} else {
+			navigator.serviceWorker.register('./sw.js', {
+				scope: './'
+			}).then(function (reg) {
+				registry = SWReg;
+				console.log('Service worker has been registered for scope:' + reg.scope);
+			});
+		}
 	}
 	/* XHR */
 	function callApi(action, value, callback) {

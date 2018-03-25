@@ -1,0 +1,107 @@
+{
+    "dir": "ltr",
+    "lang": "fr-FR",
+    "name": "Persona Framewok",
+    "scope": "/",
+    "display": "browser",
+    "start_url": "https://persona.yj.fr/",
+    "short_name": "Persona",
+    "theme_color": "transparent",
+    "description": "Persona Framewok website",
+    "orientation": "any",
+    "background_color": "transparent",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "/approot/rsc/img/icon/88a03f97-97e2-381d-1841-e748777f98a4.webPlatform.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/c7fc1f96-5505-ea43-4e33-d5235a5fdcde.webPlatform.png",
+            "sizes": "1240x600",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/f04187e4-5acf-0c2e-5a94-daa606433a32.webPlatform.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/e0f87af7-f3d9-d102-14fe-8b84d9fe35b9.webPlatform.png",
+            "sizes": "150x150",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/27d9066c-5d71-6239-6e9b-48dd0ca719c1.webPlatform.png",
+            "sizes": "88x88",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/b9269d0a-debd-73b7-6e10-f795939c4101.webPlatform.png",
+            "sizes": "24x24",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/64983133-2856-ba0a-e332-7adfc6585ddd.webPlatform.png",
+            "sizes": "50x50",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/9d27dcd4-a086-1952-1b67-41aca40fe2da.webPlatform.png",
+            "sizes": "620x300",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/593e2533-7658-9892-b26d-76f55ab577b9.webPlatform.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/18392fd4-c869-ce0c-182b-173c114ec974.webPlatform.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/bde75ff4-e901-3135-b657-a623a8f5581c.webPlatform.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/c0e511cd-b939-7b10-6c07-b18e0c2b07aa.webPlatform.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/c254e935-60d7-75e3-51c6-bbce2c590988.webPlatform.png",
+            "sizes": "36x36",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/c68ce3fe-c91c-a077-1458-e025f6004d0c.webPlatform.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/ef0a096c-5a5f-4242-1d73-3cc816b99d6b.webPlatform.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/5284407c-db03-1bbd-b1f0-ae3336d950db.webPlatform.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/d2d904af-6a35-aea0-597d-26c3e6d34d8a.webPlatform.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "/approot/rsc/img/icon/e1a06930-ed56-33cb-2650-d4b7eb454adf.webPlatform.png",
+            "sizes": "76x76",
+            "type": "image/png"
+        }
+    ]
+}

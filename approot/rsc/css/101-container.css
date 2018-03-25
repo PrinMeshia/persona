@@ -150,6 +150,7 @@ footer{
     background-repeat: no-repeat;
     background-size: auto auto;
     background-position: center top;
+    opacity: 0.5;
 }
 footer a{
 	text-decoration: none;
@@ -159,6 +160,7 @@ footer a{
 .content {
   width: 100%;
   padding: 50px 50px 150px 50px;
+  margin-left: 50px;
 }
 
 /*sidebar*/
