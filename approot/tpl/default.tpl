@@ -8,12 +8,16 @@
     <meta name="keywords" content="[$site_keywords]">
     <meta name="author" content="[$site_author]">
     <link rel="manifest" href="/manifest.webmanifest">
-    <title>[$site_title] [$page_title] </title>
+    <link href='//fonts.googleapis.com/css?family=Petit+Formal+Script' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Alegreya+Sans:300,400' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Titillium+Web:400,300' rel='stylesheet' type='text/css'>
+    <title>[$site_title] [if isset($page_title)][$page_title][/if] </title>
       [$cssfile]
 </head>
 
-<body>
-<header>
+<body style="touch-action: pan-y; -moz-user-select: none;">
+[if !isset($no_header) || $no_header != TRUE] 
+<header class="">
     <nav id="menu">
         <ul>
             <li class="active"><a href="/">Home</a></li>
@@ -32,7 +36,7 @@
     </ul>
 </header>
 <div id="overlay"> </div>
-<div id="mobileNavigation">
+<div id="mobileNavigation" >
     <div class="inner">
         <div id="illu">
             <img src="[$imgpath]svg/logo.svg">
@@ -46,6 +50,7 @@
         <div id="mobileFooter"> <a href="https://github.com/PrinMeshia" target="_blank">[$site_title]</a> - [= date("Y")] </div>
     </div>
 </div>
+[/if]
 <div class="toast__container"></div>
 <div class="loader">
         <svg viewBox="0 0 32 32" width="32" height="32">
@@ -55,13 +60,19 @@
 <section id="container">
     <main class='content'>
         <div class="cg">
-            [$body]
+            [body]
         </div>
         <div class="cg container"></div>
     </main>
 </section>
 <footer> <a href="https://github.com/PrinMeshia" target="_blank">[$site_title]</a> - [= date("Y")] </footer>
 </body>
+<script>
+window.personaConfig = {
+    imgpath : "[$imgpath]"
+}
+</script>
+[if !isset($no_js) || $no_js != TRUE] 
 [$jsfile]
-
+[/if]
 </html>

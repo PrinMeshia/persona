@@ -14,7 +14,7 @@ class Environment {
             foreach ($content as $key => $value) {
                 foreach ($value as $arrayAddress) {
                     if(array_search(Helpers::getUrlServer(),$arrayAddress) !== false || array_search(Helpers::getAddressServer(false),$arrayAddress) !== false){
-                        Persona::getInstance()->setCurrentEnv($key);
+                        $_ENV["PERSONA"] = $key;
                     }
                 }
             }

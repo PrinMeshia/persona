@@ -55,6 +55,7 @@ class QueryBuilder
 		return $this;
 	}
 
+
 	/**
 	 * @return $this
      */

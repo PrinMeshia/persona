@@ -52,8 +52,8 @@ abstract class Core
 
         $this->config = 'app\\persona\\config\\Config';
         $this->config->load('/app/config/persona.json');
-        $this->environment->setEnvironment('/app/config/environment.json');
         $this->config->load('/app/config/environment/'.$this->getCurrentEnv().'.json');
+        $this->session->start();
         $this->debug;
     }
     public function getRequest(){
@@ -67,11 +67,10 @@ abstract class Core
     public function setTimezone(){
         date_default_timezone_set($this->config->system->timezone ? $this->config->system->timezone : "UTC" );
     }
-    public function setCurrentEnv($env){
-        $this->_env = $env;
-    }
     public function getCurrentEnv(){
-        return $this->_env;
+        if(!isset($_ENV["PERSONA"]) || !empty($_ENV["PERSONA"]))
+            $this->environment->setEnvironment('/app/config/environment.json');
+        return $_ENV["PERSONA"];
     }
 
 }

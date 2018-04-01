@@ -25,11 +25,11 @@ class Response
         Persona::getInstance()->btrace = ob_end_clean();
        
     }
-    public function Response($filename = '', array $vars = [], $status = 200, array $headers = [],$asText = 0,$insert = true){
+    public function Response($filename = '', array $vars = [], $status = 200, array $headers = [],$asText = 0){
         $this->clearEntry();
         Persona::getInstance()->setStatusCode(is_numeric($status)?$status:200);
         if (!$asText){
-            Persona::getInstance()->view->load($filename, $vars, $insert);
+            Persona::getInstance()->view->load($filename, $vars);
         }
         else 
             echo $filename;
@@ -51,18 +51,31 @@ class Response
             header($key.': '.$header);
         }
     }
-    public function error($msg = '', $number = 0){
-        
-        $filename = $number;
-        $filepath = Persona::getInstance()->config->path->code_info.$filename;
+    public function maintenance(){
+        $filepath = Persona::getInstance()->config->maintenance->path;
         $vars = [];
-       if (isset(Persona::getInstance()->config->debug) && Persona::getInstance()->config->debug == 2){
-            $vars['exception'] = new \Exception($msg);
-            $vars['note'] = $msg;
-        }
         
+        if(Persona::getInstance()->config->feature->hide_header_error)
+            $vars['no_header'] = true;
+            $vars['no_js'] = true;
         if(file_exists(ROOT.$filepath.Persona::getInstance()->config->system->template_ext))
-            $this->Response($filepath,$vars,$number,[],0,Persona::getInstance()->config->system->error_template_include);
+            $this->Response($filepath,$vars,200,[],0);
+        else{
+           $this->error(Persona::getInstance()->config->messages->maintenance,200);
+        }
+    }
+    public function error($msg = '', $number = 0){
+        $filename = $number;
+        $filepath = Persona::getInstance()->config->layout->error;
+        $vars = [];
+        $vars['note'] = $msg;
+        $vars['code'] = $number;
+       if (isset(Persona::getInstance()->config->debug) && Persona::getInstance()->config->debug == 2)
+            $vars['exception'] = new \Exception($msg);
+        if(Persona::getInstance()->config->feature->hide_header_error)
+            $vars['no_header'] = true;
+        if(file_exists(ROOT.$filepath.Persona::getInstance()->config->system->template_ext))
+            $this->Response($filepath,$vars,$number,[],0);
         else{
             $this->ResponseHTML($msg, $number);
         }

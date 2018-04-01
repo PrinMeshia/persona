@@ -1,15 +1,15 @@
 {
     "debug": 1, 
     "database": {
-        "host": "test",
-        "name": "test",
+        "host": "localhost",
+        "name": "persnkxb_persona",
         "charset": "",
-        "user": "",
-        "pass": "",
+        "user": "persnkxb_data",
+        "pass": "bddgspkOnqt11423",
         "prefix": "",
         "cache": true,
         "cache_time": 60
     },
     "filecache" : true,
-    "rootfolder" : "/"
+    "rootfolder" : ""
 }

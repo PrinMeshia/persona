@@ -11,9 +11,9 @@ class Session
 {
     private $_id;
     private $_sessionid;
-    private static $_instance;
-    function __construct()
+    public function start()
     {
+        session_start();
         $this->_id = uniqid();
         $this->_sessionid = session_id();
     }
@@ -24,17 +24,6 @@ class Session
     private function sessionValidId($session_id)
     {
         return preg_match('/^[-,a-zA-Z0-9]{1,128}$/', $session_id) > 0;
-    }
-    /**
-     * @return Session
-     */
-    public static function getInstance()
-    {
-        if (is_null(self::$_instance)) {
-            session_start();
-            self::$_instance = new Session();
-        }
-        return self::$_instance;
     }
     /**
      * @param $key

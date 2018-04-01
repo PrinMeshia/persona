@@ -1,7 +1,7 @@
 {
     "default": {
         "ip": ["127.0.0.1", "::1"],
-        "dns": ["localhost"]
+        "dns": ["localhost","https://localhost"]
     },
     "planethoster": {
         "ip": ["persona.yj.fr"],

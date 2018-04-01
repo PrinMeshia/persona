@@ -22,8 +22,8 @@ class Persona extends core\Core
     {
         return __DIR__;
     }
-    public function redirect(){
-        header('Location: /'); 
+    public function redirect($uri){
+        header('Location: '.$uri); 
     }
     public function run()
     {
@@ -75,10 +75,10 @@ class Persona extends core\Core
     public function listen()
     {
         if($this->config->system->maintenance){
-            if($_SERVER['REQUEST_URI'] == '/'){
-                $this->response->error($this->config->messages->soon, "soon");
+            if($_SERVER['REQUEST_URI'] == Persona::getInstance()->config->rootfolder.'/'){
+                $this->response->maintenance();
             }else{
-                $this->redirect();
+                $this->redirect(Persona::getInstance()->config->rootfolder.'/');
             }
             
         }else{
@@ -104,4 +104,5 @@ class Persona extends core\Core
     public function generateRoute($uri){
         return ($this->config->root) ?($this->config->root.$uri) : $uri;
     }
+   
 }

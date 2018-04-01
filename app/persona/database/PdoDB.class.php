@@ -1,137 +1,127 @@
 <?php
 namespace app\persona\database;
 use \PDO;
-class PdoDB extends Database{
-   
-    public function newConnection()
-    {
-        $dsn = 'mysql:host=' . $config->host . ';dbname=' . $config->dbname;
-                try{
-                    $pdo = new PDO($config->dsn, $config->login, $config->password);
-                    $pdo ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $pdo ->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-                    $this->connections[] = $pdo;
-                    $connection_id = count( $this->connections )-1;
-                }
-                catch(PDOException $e){
-                     trigger_error('Error connecting to host. '.$e->getMessage(), E_USER_ERROR);
-                }  
-        return $connection_id;
-    }
-    public function closeConnection()
-    {
-        $this->connections[$this->activeConnection] = null;
-        unset($this->connections[$this->activeConnection]);
-    }
-    public function setActiveConnection( int $new )
-    {
-        $this->activeConnection = $new;
-    }
-    public function cacheQuery( $queryStr )
-    {
-        $stmt = $this->connections[$this->activeConnection]->prepare( $queryStr );
-        $result = $stmt->execute();    
+use app\persona\Persona;
+use app\persona\exception\Exceptionhandler;
+class PdoDB extends Database
+{
+    private $connection;
 
-        if( !$result )
-        {
-            trigger_error('Error executing and caching query: '.$this->connections[$this->activeConnection]->errorInfo()[0], E_USER_ERROR);
+    /**
+     * @return PDO
+     */
+    private function getConnexion()
+    {
+        if ($this->pdo === null) {
+            $dsn = 'mysql:host=' . $this->dbHost . ';dbname=' . $this->dbName;
+            try {
+                $pdo = new PDO($dsn, $this->dbUser, $this->dbPass);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+                $this->connection = $pdo;
+            } catch (PDOException $e) {
+                new Exceptionhandler('Error connecting to host. ' . $e->getMessage(), E_USER_ERROR);
+            }
+        }
+        return $this->connection;
+    }
+    public function cacheQuery($statement)
+    {
+        $stmt = $this->getConnexion()->prepare($statement);
+        $result = $stmt->execute();
+
+        if (!$result) {
+            new Exceptionhandler('Error executing and caching query: ' . $this->getConnexion()->errorInfo()[0], E_USER_ERROR);
             return -1;
-        }
-        else
-        {
-            $this->queryCache[] = $stmt;
-            return count($this->queryCache)-1;
+        } else {
+            $this->_queryCache[] = $stmt;
+            return count($this->_queryCache) - 1;
         }
     }
-    public function numRowsFromCache( $cache_id )
+
+    /**
+     * @param $statement
+     * @param null $className
+     * @param bool|false $single
+     * @return array|mixed
+     */
+    public function query($statement, $single = false)
     {
-        return $this->queryCache[$cache_id]->rowCount();    
-    }
-    public function resultsFromCache( $cache_id )
-    {
-        return $this->queryCache[$cache_id]->fetch(PDO::FETCH_ASSOC);
-    }
-    public function cacheData( $data )
-    {
-        $this->dataCache[] = $data;
-        return count( $this->dataCache )-1;
-    }
-    public function dataFromCache( $cache_id )
-    {
-        return $this->dataCache[$cache_id];
-    }
-    public function deleteRecords( $table, $condition, $limit )
-    {
-        $limit = ( $limit == '' ) ? '' : ' LIMIT ' . $limit;
-        $delete = "DELETE FROM {$table} WHERE {$condition} {$limit}";
-        $this->executeQuery( $delete );
-    }
-    public function updateRecords( $table, $changes, $condition )
-    {
-        $update = "UPDATE " . $table . " SET ";
-        foreach( $changes as $field => $value )
-        {
-            $update .= "`" . $field . "`='{$value}',";
+        $history = ['sql' => $statement];
+        if (!$req = $this->getConnexion()->query($statement)) {
+            new Exceptionhandler('Error executing query: ' . $this->connections[$this->activeConnection]->errorInfo(), E_USER_ERROR);
+        } else {
+            $req->setFetchMode(PDO::FETCH_OBJ);
+            if ($single) {
+                $datas = $req->fetch();
+            } else {
+                $datas = $req->fetchAll();
+            }
+            return $datas;
         }
-        $update = substr($update, 0, -1);
-        if( $condition != '' )
-        {
-            $update .= "WHERE " . $condition;
-        }
-        $this->executeQuery( $update );
-         
-        return true;
-         
     }
-    public function insertRecords( $table, $data )
+
+
+    /**
+     * @param $statement
+     * @param $attr
+     * @param $className
+     * @param bool|false $single
+     * @return array|mixed
+     */
+    public function prepare($statement, $attr, $single = false)
     {
-        $fields  = "";
-        $values = "";
-        foreach ($data as $f => $v)
-        {
-             
-            $fields  .= "`$f`,";
-            $values .= ( is_numeric( $v ) && ( intval( $v ) == $v ) ) ? $v."," : "'$v',";
-         
+        $req = $this->getConnexion()->prepare($statement);
+        $req->execute($attr);
+        $req->setFetchMode(PDO::FETCH_CLASS);
+        if ($single) {
+            $datas = $req->fetch();
+        } else {
+            $datas = $req->fetchAll();
         }
-        $fields = substr($fields, 0, -1);
-        $values = substr($values, 0, -1);
-         
-        $insert = "INSERT INTO $table ({$fields}) VALUES({$values})";
-        $this->executeQuery( $insert );
-        return true;
+        return $datas;
     }
-    public function executeQuery( $queryStr )
+
+    public function insert($statement)
     {
-        if( !$result = $this->connections[$this->activeConnection]->prepare( $queryStr )->execute() )
-        {
-            trigger_error('Error executing query: '.$this->connections[$this->activeConnection]->errorInfo(), E_USER_ERROR);
-        }
-        else
-        {
-            $this->last = $result;
-        }
-         
+        $req = $this->getConnexion()->prepare($statement);
+        $req->execute();
     }
-    public function getRows()
+
+    public function update($statement)
     {
-        return $this->last->fetch(PDO::FETCH_ASSOC);
+        $req = $this->getConnexion()->prepare($statement);
+        $req->execute();
+    }
+
+    public function drop($statement)
+    {
+        $req = $this->getConnexion()->prepare($statement);
+        $req->execute();
+    }
+    public function sanitizeData($data)
+    {
+        return $this->getConnexion()->real_escape_string($data);
+    }
+    public function numRowsFromCache($cacheid)
+    {
+        return $this->queryCache[$cacheid]->rowCount();
+    }
+    public function resultsFromCache($cacheid)
+    {
+        return $this->queryCache[$cacheid]->fetch(PDO::FETCH_ASSOC);
+    }
+    public function cacheData($data)
+    {
+        $this->_dataCache[] = $data;
+        return count($this->_dataCache) - 1;
+    }
+    public function dataFromCache($cache_id)
+    {
+        return $this->_dataCache[$cache_id];
     }
     public function affectedRows()
     {
-        return $this->$this->connections[$this->activeConnection]->affected_rows;
-    }
-    public function sanitizeData( $data )
-    {
-        return $this->connections[$this->activeConnection]->real_escape_string( $data );
-    }
-    public function __deconstruct()
-    {
-        foreach( $this->connections as $connection )
-        {
-            $connection = null;
-            unset($connection);
-        }
+        return $this->getConnexion()->affected_rows;
     }
 }
-?>

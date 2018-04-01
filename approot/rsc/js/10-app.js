@@ -10,6 +10,7 @@
 	var pnBtn = document.querySelector('#pushBtn');
 	var mobilePushBtn = document.querySelector('#mobilePushBtn');
 	/*var*/
+	var isSubscribed = false;
 	var hambtnClick = false;
 	var defer = localStorage.defer || 0;
 	var hammertime = new Hammer(document.body);
@@ -82,7 +83,7 @@
 			return serviceWorkerRegistration.pushManager.subscribe({ userVisibleOnly: true });
 		}).then(function (subscription) {
 			//sauvegarde de l'inscription dans le serveur applicatif (2)
-			fetch('/register-to-notification', {
+			fetch('/push/subscribe', {
 				method: 'post',
 				headers: {
 					'Accept': 'application/json',
@@ -108,7 +109,7 @@
 			navigator.serviceWorker.register('./sw.js', {
 				scope: './'
 			}).then(function (reg) {
-				registry = SWReg;
+				registry = reg;
 				console.log('Service worker has been registered for scope:' + reg.scope);
 			});
 		}

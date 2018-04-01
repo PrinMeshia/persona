@@ -1,23 +1,48 @@
 <?php
 namespace app\persona\event\EventManager;
 
+use \Exception;
+
 class EventManager 
 {
     public static $Priority = 10;
-    protected $_listeners = [];
+    protected static $_listeners = [];
     protected $_eventList;
 
     private $events = array();
 
     public function attach($name, $callback) {
-        $this->events[$name][] = $callback;
-    }
-
-    public function trigger($name, $params = array()) {
-        foreach ($this->events[$name] as $event => $callback) {
-            $e = new Event($name, $params);
-            $callback($e);
+        try {
+            if(empty($name) OR empty($callback))
+                throw new Exception();
+            if(isset(self::$_listeners[$name]))
+                throw new Exception("{$name} :: allready exist.");
+            self::$_listeners[$name] = $callback;
+        }
+        catch (Exception $e) {
+            echo '<b>[EventManager::attach]</b> '.$e->getMessage();
         }
     }
 
+
+    public static function Trigger($name = '') {
+        try {
+            if(empty($name))
+                throw new Exception();
+            
+            @$Func = self::$_listeners[$name];
+            if(isset($Func)) {
+                if(is_callable($Func)) {
+                    $Args = func_get_args();
+                    array_shift($Args);
+                    if(call_user_func_array($Func, $Args) === FALSE)
+                        throw new Exception("{$name} :: Error Callback.");
+                }
+            }
+        
+        }
+        catch (Exception $e) {
+            echo '<b>[EventManager::Trigger]</b> '.$e->getMessage();
+        }
+    }
 }

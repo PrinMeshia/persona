@@ -2,6 +2,7 @@
     namespace app\persona\ressources;
 
     use app\persona\Persona;
+    use app\persona\helpers\Helpers;
 
     class Ressources 
     {
@@ -47,7 +48,7 @@
             foreach ($temp as $key => $value) {
                 foreach ($value as $file) {
                     if(is_readable($file))
-                        $html .= sprintf($meta, str_replace(ROOT, "", $file));
+                        $html .= sprintf($meta, str_replace(ROOT, Helpers::localhost() ? "/persona/":"", $file));
                 }
             }
             foreach ($this->_file[$type] as $file) {

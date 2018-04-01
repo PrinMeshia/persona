@@ -132,6 +132,15 @@ header #param .inactive span {
   max-width:0;
   margin-left:0;
 }
+header img {
+  height:26px;
+  display:inline-block;
+  vertical-align:middle;
+}
+
+header ul li a img {
+  margin-right:10px;
+}
 
 
 /*FOOTER*/
@@ -143,7 +152,7 @@ footer{
     font-weight: 600;
     font-size: 14px;
     color: #fff;
-    z-index: 15;
+    z-index: -1;
     width: 100%;
     text-align: right;
     background: url('../img/top.png') rgba(254, 254, 254, 0);
@@ -231,6 +240,7 @@ color:#999;
  font-family: arial;
 font-size: 14px;
 text-decoration:none;
+transform: translateZ(0) scale(1,1);
 -webkit-transform:translateZ(0) scale(1,1);
 -webkit-transition:all .1s linear;
 transition:all .1s linear;

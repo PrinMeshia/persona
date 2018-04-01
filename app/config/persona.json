@@ -1,7 +1,7 @@
 {
     "website": {
-        "title": "Persona Framewok",
-        "description": "Persona Framewok",
+        "title": "Persona Framework",
+        "description": "Persona Framework",
         "version": "1.0.0",
         "author": "Prin'Meshia",
         "lang": "fr-FR",
@@ -11,9 +11,12 @@
         "language": "fr-fr",
         "timezone": "Europe/Paris",
         "maintenance" : false,
-        "template_ext" : ".tpl",
-        "error_template_include" : false
+        "template_ext" : ".tpl"
     },
+    "feature":{
+        "hide_header_error" : false
+    },
+    
     "fixedpath":{
         "app": "/app/",
         "src": "/src/"
@@ -42,16 +45,19 @@
     },
     "namespace": {
         "src": "src\\",
-        "module": "{namespace.src}module\\"
-},
+        "module": "{namespace.src}module\\",
+        "model": "{namespace.src}model\\"
+    },
     "messages": {
         "e404": "La page que vous recherchez n'hesiste pas",
-        "soon": "Site en construction",
-        "maintenance": "Site en maintenance"
-
+        "maintenance": "Maintenance du site en cours"
+    },
+    "maintenance":{
+        "path": "{path.code_info}/maintenance"
     },
     "layout": {
-        "path": "{path.public_tpl}default"
+        "path": "{path.public_tpl}default",
+        "error":"{path.public_tpl}info"
     },
     "cache":{
         "expiration" : "3600",
@@ -74,7 +80,9 @@
         "database" : "app\\persona\\database\\Database",
         "pdo" : "app\\persona\\database\\PdoDB",
         "querybuilder" : "app\\persona\\database\\QueryBuilder",
-        "ressources" : "app\\persona\\ressources\\Ressources"
+        "ressources" : "app\\persona\\ressources\\Ressources",
+        "helpers" : "app\\persona\\helpers\\Helpers",
+        "dumper" : "app\\persona\\helpers\\Dumper"
     }
 
 

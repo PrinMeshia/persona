@@ -1,9 +1,3 @@
-@import url(global.css);
-@import url(cs.css);
-@import url(container.css);
-@import url(mobile.css);
-
-
 .app__offline {
   background-color: #6b6b6b;
 }
@@ -13,11 +7,12 @@
 
 /*glitch*/
 .glitch {
-  color: Black;
+  color: #fff;
   font-size: 100px;
   position: relative;
   /*width: attr(data-width);*/
   margin: 0 auto;
+  width: 140px;
 }
 
 @keyframes noise-anim {
@@ -91,8 +86,7 @@
   left: 2px;
   text-shadow: -1px 0 red;
   top: 0;
-  color: Black;
-  background: white;
+  color: #fff;
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
   animation: noise-anim 2s infinite linear alternate-reverse;
@@ -169,8 +163,7 @@
   left: -2px;
   text-shadow: 1px 0 blue;
   top: 0;
-  color: black;
-  background: white;
+  color: #fff;
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
   animation: noise-anim-2 3s infinite linear alternate-reverse;
