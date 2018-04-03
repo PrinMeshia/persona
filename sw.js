@@ -8,7 +8,7 @@ var urls2Cache = [
 	'/approot/rsc/css/199-custom.css',
 	'/approot/rsc/js/00-lib.js',
 	'/approot/rsc/js/10-app.js',
-	'/approot/rsc/js/11-latest.js',
+	'/approot/rsc/js/99-git.js',
 	'/approot/rsc/js/12-toast.js'
   
 ];
@@ -51,31 +51,42 @@ self.addEventListener('activate',function(e){
 		})
 	);
 });
-self.addEventListener('push', function(e) {
-  var title = "We reached a milestone.";
-  var body = "Come quick! The counter is going crazy!";
-  var icon = 'images/icons/icon-android-152x152.png';
-  Element.waitUntil(
-    self.registration.showNotification(title, {
-      'body': body,
-      'icon': icon
-    }));
+self.addEventListener('push', function(event) {
+  event.waitUntil(
+    self.registration.pushManager.getSubscription()
+    .then(function(subscription) {
+      fetch(TODO_URL + "get-notification?endpoint=" + JSON.stringify(subscription.endpoint))
+      .then(function(response) {
+        if (response.status !== 200) {
+          // gestion des code d'erreurs HTTP
+        }
+        return response.json();
+      })
+      .then(function(data) {
+        // obtenir de data les informations de la notification pour l'afficher
+        var notificationOptions = {
+          body: data.body,
+          icon: data.icon ? data.icon : 'public/icons/icon-default.png',
+          data:{
+            url : data.clickUrl
+          }
+        };
+        title = data.click;
+        return self.registration.showNotification(title, notificationOptions);
+      })
+      .catch(function(err) {
+        // gestion des erreurs
+      })
+    })
+    .catch(function(err) {
+      //gestion de l'erreur de récupération de l'inscription
+    })
+  );
 });
-self.addEventListener('notificationclick', function(e) {
-  e.notification.close();
-  e.waitUntil(clients.matchAll({
-    type: 'window'
-  }).then(function(clientList) {
-    for (var i = 0; i < clientList.length; i++) {
-      var client = clientList[i];
-      if (client.url === '/' && 'focus' in client) {
-        return client.focus();
-      }
-    }
-    if (clients.openWindow) {
-      return clients.openWindow('/');
-    }
-  }));
+self.addEventListener('notificationclick', function(event) {
+  var url = event.notification.data.url;
+  event.notification.close();
+  event.waitUntil(clients.openWindow(url));
 });
 
 

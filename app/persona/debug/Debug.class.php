@@ -6,6 +6,8 @@ use app\persona\Persona;
 class Debug {
     function __construct()
     {
+        set_error_handler(Persona::getInstance()->config->class->error.'::errorHandler');
+        set_exception_handler(Persona::getInstance()->config->class->error.'::exceptionHandler');
         if(Persona::getInstance()->config->debug){
             switch (Persona::getInstance()->config->debug)
             {

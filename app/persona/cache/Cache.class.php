@@ -1,7 +1,6 @@
 <?php
 namespace app\persona\cache;
 use app\persona\Persona;
-use app\persona\exception\Exceptionhandler;
 class Cache  {
   public function __construct() {}
   public function isCached($key) {
@@ -58,7 +57,7 @@ class Cache  {
         $cacheData = json_encode($cacheData);
         file_put_contents($this->getCacheDir(), $cacheData);
       } else {
-        throw new Exceptionhandler("Error: erase() - Key '{$key}' not found.");
+        throw new \Exception("Error: erase() - Key '{$key}' not found.");
       }
     }
     return $this;
@@ -123,10 +122,10 @@ class Cache  {
 
   private function _checkCacheDir() {
     if (!is_dir(Persona::getInstance()->config->path->cache) && !mkdir(Persona::getInstance()->config->path->cache, 0775, true)) {
-      throw new Exceptionhandler('Unable to create cache directory ' . Persona::getInstance()->config->path->cache);
+      throw new \Exception('Unable to create cache directory ' . Persona::getInstance()->config->path->cache);
     } elseif (!is_readable(Persona::getInstance()->config->path->cache) || !is_writable(Persona::getInstance()->config->path->cache)) {
       if (!chmod(Persona::getInstance()->config->path->cache, 0775)) {
-        throw new Exceptionhandler(Persona::getInstance()->config->path->cache . ' must be readable and writeable');
+        throw new \Exception(Persona::getInstance()->config->path->cache . ' must be readable and writeable');
       }
     }
     return true;

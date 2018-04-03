@@ -1,7 +1,6 @@
 <?php
 namespace app\persona\event\EventManager;
 
-use \Exception;
 
 class EventManager 
 {
@@ -14,13 +13,13 @@ class EventManager
     public function attach($name, $callback) {
         try {
             if(empty($name) OR empty($callback))
-                throw new Exception();
+                throw new \Exception();
             if(isset(self::$_listeners[$name]))
-                throw new Exception("{$name} :: allready exist.");
+                throw new \Exception("{$name} :: allready exist.");
             self::$_listeners[$name] = $callback;
         }
         catch (Exception $e) {
-            echo '<b>[EventManager::attach]</b> '.$e->getMessage();
+            throw new \Exception('[EventManager::attach]'.$e->getMessage());
         }
     }
 
@@ -28,7 +27,7 @@ class EventManager
     public static function Trigger($name = '') {
         try {
             if(empty($name))
-                throw new Exception();
+                throw new \Exception();
             
             @$Func = self::$_listeners[$name];
             if(isset($Func)) {
@@ -36,13 +35,13 @@ class EventManager
                     $Args = func_get_args();
                     array_shift($Args);
                     if(call_user_func_array($Func, $Args) === FALSE)
-                        throw new Exception("{$name} :: Error Callback.");
+                        throw new \Exception("{$name} :: Error Callback.");
                 }
             }
         
         }
         catch (Exception $e) {
-            echo '<b>[EventManager::Trigger]</b> '.$e->getMessage();
+            throw new \Exception('[EventManager::Trigger] '.$e->getMessage());
         }
     }
 }

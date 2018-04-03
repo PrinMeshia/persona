@@ -11,6 +11,12 @@
     <link href='//fonts.googleapis.com/css?family=Petit+Formal+Script' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Alegreya+Sans:300,400' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Titillium+Web:400,300' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#3a7bd5">
+    <meta name="apple-mobile-web-app-title" content="[$site_title]">
+    <meta name="msapplication-TileColor" content="#3a7bd5">
+    <meta name="theme-color" content="#3a7bd5">
     <title>[$site_title] [if isset($page_title)][$page_title][/if] </title>
       [$cssfile]
 </head>
@@ -62,7 +68,7 @@
         <div class="cg">
             [body]
         </div>
-        <div class="cg container"></div>
+        
     </main>
 </section>
 <footer> <a href="https://github.com/PrinMeshia" target="_blank">[$site_title]</a> - [= date("Y")] </footer>

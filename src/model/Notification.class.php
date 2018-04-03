@@ -9,6 +9,6 @@ class Notification extends Model {
         return $this->query($sql);
     }
 	public function insertData($endpoint){
-        return $this->insert("insert into notification(endpoint,push) value('$endpoint',1)");
+        return $this->query("insert into notification(endpoint,push) value(?,?)", [$endpoint,1]);
     }
 }

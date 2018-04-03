@@ -36,16 +36,12 @@ class Model
 		return $this->query('SELECT * FROM '. $this->table .' WHERE '.$key.' = ?', [$elem],true);
 	}
 	public function findLike($key,$elem){
-		return $this->query('SELECT * FROM '.$this->table .'	WHERE '.$key.' like ?',	['%'.$elem.'%']);
+		return $this->query('SELECT * FROM '.$this->table .' WHERE '.$key.' like ?',	['%'.$elem.'%']);
 	}
+	public function exists($id){
+        $database = Database::openConnection();
+        $database->getById($this->table, $id);
+        return $database->countRows() === 1;
+    }
 
-	public function insert($statement){
-		return $this->db->insert($statement);
-	}
-	public function update($statement){
-		return $this->db->update($statement);
-	}
-	public function drop($statement){
-		return $this->db->drop($statement);
-	}
 }

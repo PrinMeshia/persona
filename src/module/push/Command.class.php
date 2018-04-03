@@ -6,7 +6,7 @@ namespace src\module\push;
 use \Exception;
 use app\persona\controller\AbstractController;
 
-class Push extends AbstractController
+class Command extends AbstractController
 {
 
     public function subscribeAction(){

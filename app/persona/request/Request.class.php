@@ -67,4 +67,8 @@ class Request
     public function clear($value){
         return htmlentities($value);
     }
+    public function referer(){
+        return isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER']: null;
+    }
+   
 }

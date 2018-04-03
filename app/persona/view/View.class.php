@@ -59,5 +59,36 @@ class View
         }
         return $variables;
     }
+    public function autoLinks($str){
+        return preg_replace('!(((f|ht)tp(s)?://)[-a-zA-Zа-яА-Я()0-9@:%_+.~#?&;//=]+)!i', '<a href="$1" target="_blank">$1</a>', $str);
+    }
+    public function encodeHTML($str){
+        return htmlentities($str, ENT_QUOTES, 'UTF-8');
+    }
+    public function encodeHTMLWithBR($str){
+        return nl2br(htmlentities($str, ENT_QUOTES, 'UTF-8'));
+    }
+    public function datePicker($unixtime){
+        $date = date("d/m/Y", (int)$unixtime);
+        return (empty($date))? "": $date;
+    }
+    public function unixtime($unixtime){
+        $date = date("F j, Y", intval($unixtime));
+        return (empty($date))? "": $date;
+    }
+    public function timestamp($timestamp){
+        $unixTime = strtotime($timestamp);
+        $date = date("F j, Y", $unixTime);
+        return (empty($date))? "": $date;
+    }
+    public function truncate($str, $len){
+        if(empty($str)) {
+            return "";
+        }else if(mb_strlen($str, 'UTF-8') > $len){
+            return mb_substr($str, 0, $len, "UTF-8") . " ...";
+        }else{
+            return mb_substr($str, 0, $len, "UTF-8");
+        }
+    }
 
 }

@@ -31,7 +31,6 @@ class Persona extends core\Core
         $this->setTimezone();
         $this->loadRoute();
         $this->listen();
-       
     }
     /**
      * @param $uri
@@ -64,9 +63,7 @@ class Persona extends core\Core
                     $persona->createRoute($value->route, $value->method, function () use ($persona, $action) {
                         $persona->controller->call($action[0], sizeof($action) > 1 ? $action[1] : "index");
                     });
-
                 }
-
             }
         }
     }
@@ -80,7 +77,6 @@ class Persona extends core\Core
             }else{
                 $this->redirect(Persona::getInstance()->config->rootfolder.'/');
             }
-            
         }else{
             $slugs = [];
             $run = $this->router->traverseRoutes($this->request->getMethod(), $this->routes, $slugs);

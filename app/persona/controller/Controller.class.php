@@ -17,7 +17,7 @@ class Controller{
     public function __construct(){}
     public function call($module, $action = "index",$vars = [])
     {
-        $str = Persona::getInstance()->config->namespace->module.strtolower($module).'\\'.ucfirst(strtolower($module));
+        $str = Persona::getInstance()->config->namespace->module.strtolower($module).'\\Command';
         if (class_exists($str) ) {
             $this->_controller = new $str();
             $this->_action = $action.'Action';
@@ -27,7 +27,7 @@ class Controller{
                 Persona::getInstance()->response->error('Action '.$action.' not found',404);
             }
         }else{
-            Persona::getInstance()->response->error('Controller '.$module.' not found',404);
+            Persona::getInstance()->response->error('Controller '.$str.' not found',404);
         }
     }
 

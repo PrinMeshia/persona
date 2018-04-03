@@ -3,7 +3,7 @@
     "database": {
         "host": "localhost",
         "name": "persnkxb_persona",
-        "charset": "",
+        "charset": "UTF-8",
         "user": "persnkxb_data",
         "pass": "bddgspkOnqt11423",
         "prefix": "",

@@ -2,7 +2,6 @@
 namespace app\persona\database;
 use \PDO;
 use app\persona\Persona;
-use app\persona\exception\Exceptionhandler;
 class PdoDB extends Database
 {
     private $connection;
@@ -20,7 +19,7 @@ class PdoDB extends Database
                 $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
                 $this->connection = $pdo;
             } catch (PDOException $e) {
-                new Exceptionhandler('Error connecting to host. ' . $e->getMessage(), E_USER_ERROR);
+                throw new \Exception('Error connecting to host. ' . $e->getMessage(), E_USER_ERROR);
             }
         }
         return $this->connection;
@@ -31,7 +30,7 @@ class PdoDB extends Database
         $result = $stmt->execute();
 
         if (!$result) {
-            new Exceptionhandler('Error executing and caching query: ' . $this->getConnexion()->errorInfo()[0], E_USER_ERROR);
+            throw new \Exception('Error executing and caching query: ' . $this->getConnexion()->errorInfo()[0], E_USER_ERROR);
             return -1;
         } else {
             $this->_queryCache[] = $stmt;
@@ -41,7 +40,6 @@ class PdoDB extends Database
 
     /**
      * @param $statement
-     * @param null $className
      * @param bool|false $single
      * @return array|mixed
      */
@@ -49,7 +47,7 @@ class PdoDB extends Database
     {
         $history = ['sql' => $statement];
         if (!$req = $this->getConnexion()->query($statement)) {
-            new Exceptionhandler('Error executing query: ' . $this->connections[$this->activeConnection]->errorInfo(), E_USER_ERROR);
+            throw new \Exception('Error executing query: ' . $this->connections[$this->activeConnection]->errorInfo(), E_USER_ERROR);
         } else {
             $req->setFetchMode(PDO::FETCH_OBJ);
             if ($single) {
@@ -65,7 +63,6 @@ class PdoDB extends Database
     /**
      * @param $statement
      * @param $attr
-     * @param $className
      * @param bool|false $single
      * @return array|mixed
      */
@@ -82,23 +79,6 @@ class PdoDB extends Database
         return $datas;
     }
 
-    public function insert($statement)
-    {
-        $req = $this->getConnexion()->prepare($statement);
-        $req->execute();
-    }
-
-    public function update($statement)
-    {
-        $req = $this->getConnexion()->prepare($statement);
-        $req->execute();
-    }
-
-    public function drop($statement)
-    {
-        $req = $this->getConnexion()->prepare($statement);
-        $req->execute();
-    }
     public function sanitizeData($data)
     {
         return $this->getConnexion()->real_escape_string($data);

@@ -11,6 +11,7 @@ namespace app\persona\http;
 use app\persona\Persona;
 class Response
 {
+
     public function __construct(){
     }
     protected function forbidden(){
@@ -52,7 +53,7 @@ class Response
         }
     }
     public function maintenance(){
-        $filepath = Persona::getInstance()->config->maintenance->path;
+        $filepath = Persona::getInstance()->config->layout->maintenance;
         $vars = [];
         
         if(Persona::getInstance()->config->feature->hide_header_error)
