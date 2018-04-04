@@ -1,67 +1,66 @@
 <?php
-/**
- * Created by Prim'Meshia.
- * Datetime : 03/04/2017 15:42
- * Project : a10t2
- * file : Router.class.php
- * description :
- */
 namespace app\persona\route;
 
-
 use app\persona\Persona;
+use app\persona\GlobalRepository;
 
 class Router
 {
-    public function __construct(){
+
+    private $controller;
+    private $method;
+    private $params = [];
+    public function __construct()
+    {
+        $this->controller = Persona::getInstance()->config->default->controller . '\\Command';
+        $this->method = Persona::getInstance()->config->default->method . 'Action';
     }
 
-    public function traverseRoutes($method = 'GET', array $routes, array &$slugs){
-       
-        if (isset($routes[$method])){
-            foreach($routes[$method] as $route)
-                if($func = $this->processUri($route, $slugs)){
-                    
-                    call_user_func_array($func, $slugs);
-                    return true;
-                }
+    public function route()
+    {
+
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        if (Persona::getInstance()->config->rootfolder . '/' != '/') {
+            $path = trim(substr($path, strlen(Persona::getInstance()->config->rootfolder . '/')), '/');
+        } else {
+            $path = trim($path, '/');
         }
-        return false;
-    }
-    public  function getSegment($segment_number){
-        $uri = Persona::getInstance()->request->getRequestedUri();
-        $uri_segments = preg_split('/[\/]+/',$uri,null,PREG_SPLIT_NO_EMPTY);
-        return isset($uri_segments[$segment_number]) ? $uri_segments[$segment_number] : false;
-    }
-    private function processUri($route, &$slugs = []){
-        $url = Persona::getInstance()->request->getRequestedUri();
-        $uri = parse_url($url, PHP_URL_PATH);
-        $func = $this->matchUriWithRoute($uri, $route, $slugs);
-        return $func ? $func : false;
-    }
-    static function matchUriWithRoute($uri, $route, &$slugs){
-        $uri_segments = preg_split('/[\/]+/', $uri, null, PREG_SPLIT_NO_EMPTY);
-        $route_segments = preg_split('/[\/]+/', $route->route, null, PREG_SPLIT_NO_EMPTY);
-        if (self::compareSegments($uri_segments, $route_segments, $slugs)){
-            //route matched
-            return $route->function; //Object route
-        }
-        return false;
-    }
-    static function CompareSegments($uri_segments, $route_segments, &$slugs){
-        if (count($uri_segments) != count($route_segments)) return false;
-        foreach($uri_segments as $segment_index => $segment){
-            $segment_route = $route_segments[$segment_index];
-            $is_slug = preg_match('/^{[^\/]*}$/', $segment_route) || preg_match('/^:[^\/]*/', $segment_route,$matches);
-            if ($is_slug){
-                if (strlen(trim($segment)) === 0){
-                    return false;
-                }
-                $slugs[ str_ireplace(array(':', '{', '}'), '', $segment_route) ] = $segment;
+        @list($controller, $method, $params) = array_filter(explode('/', $path, 3));
+
+        if (isset($controller)) {
+            $obj = Persona::getInstance()->config->namespace->module . strtolower($controller) . '\\Command';
+            if (class_exists($obj)) {
+                $this->controller = $obj;
+            } else {
+                return $this->notFound();
             }
-            else if($segment_route !== $segment && $is_slug !== 1)
-                return false;
+            unset($controller);
         }
-        return true;
+        $method .= "Action";
+        if (isset($method)) {
+            if (method_exists($this->controller, $method) && !method_exists(get_parent_class($this->controller), $method)) {
+                $this->method = $method;
+            } else {
+                return $this->notFound();
+            }
+            unset($method);
+        }
+       if (method_exists($this->controller, $this->method)) {
+        call_user_func_array([new $this->controller(), $this->method], $this->params);
+        } else {
+            return $this->notFound();
+        }
+        unset($params);
+        
+    }
+    private function notFound()
+    {
+        if(Persona::getInstance()->config->debug && Persona::getInstance()->config->debug == 2)
+            $msg = "Route not found for Path: '" . Persona::getInstance()->request->getRequestedUri() . "' with HTTP Method: '" . Persona::getInstance()->request->getMethod() . "'. ";
+        else
+            $msg = Persona::getInstance()->config->messages->e404 ? Persona::getInstance()->config->messages->e404 : "";
+        return Persona::getInstance()->response->error($msg, 404);
     }
 }
+
+

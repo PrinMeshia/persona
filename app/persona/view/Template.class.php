@@ -2,7 +2,6 @@
 namespace app\persona\view;
 
 use app\persona\Persona;
-use app\persona\helpers\Dumper;
 
 class Template
 {

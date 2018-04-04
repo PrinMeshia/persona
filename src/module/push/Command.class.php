@@ -8,7 +8,9 @@ use app\persona\controller\AbstractController;
 
 class Command extends AbstractController
 {
-
+    public function indexAction(){
+        
+    }
     public function subscribeAction(){
         $content = $this->request->getBody();
         $data = json_decode($content);

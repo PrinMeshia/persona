@@ -79,7 +79,7 @@
         "model": "{namespace.src}model\\"
     },
     "messages": {
-        "e404": "La page que vous recherchez n'hesiste pas",
+        "e404": "La page que vous recherchez n'existe pas",
         "maintenance": "Maintenance du site en cours"
     },
     "maintenance": {
@@ -110,6 +110,11 @@
         "ressources": "app\\persona\\ressources\\Ressources",
         "helpers": "app\\persona\\helpers\\Helpers",
         "mail": "app\\persona\\email\\Email",
-        "error": "app\\persona\\error\\Error"
+        "error": "app\\persona\\error\\Error",
+        "globalrepositery" : "app\\persona\\trait\\GlobalRepositery"
+    },
+    "default" : {
+        "controller" : "{namespace.module}home",
+        "method" : "index"
     }
 }
