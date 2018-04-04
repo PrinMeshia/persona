@@ -41,6 +41,8 @@ class Persona extends core\Core
         }else{
             $this->router->route();
         }
+        if($this->config->debug && $this->config->debug == 2)
+            $this->profiler->display();
     }
     public function getRoutes()
     {

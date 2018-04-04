@@ -7,7 +7,7 @@ use app\persona\controller\AbstractController;
 class Command extends AbstractController
 {
     public function indexAction(){
-        echo "toto";
-        return parent::render();
+        $this->assign(["test"=>"toto"]);
+        $this->render();
     }
 }

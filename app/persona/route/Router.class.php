@@ -14,7 +14,7 @@ class Router
     {
         $this->controller = Persona::getInstance()->config->default->controller . '\\Command';
         $this->method = Persona::getInstance()->config->default->method . 'Action';
-        var_dump("init router");
+
     }
 
     public function route()
@@ -38,9 +38,9 @@ class Router
             }
             unset($controller);
         }
-        
+
         if (isset($method)) {
-            $realmethod = $method."Action";
+            $realmethod = $method . "Action";
             if (method_exists($this->controller, $realmethod) && !method_exists(get_parent_class($this->controller), $realmethod)) {
                 $this->method = $realmethod;
             } else {
@@ -54,7 +54,7 @@ class Router
             call_user_func_array([new $this->controller(), $this->method], $this->params);
         } else {
             $this->notFound();
-                exit(1);
+            exit(1);
         }
         unset($params);
 
@@ -62,7 +62,7 @@ class Router
     private function notFound()
     {
         if (Persona::getInstance()->config->debug && Persona::getInstance()->config->debug == 2)
-        $msg = "Route not found for Path: '" . Persona::getInstance()->request->getRequestedUri() . "' with HTTP Method: '" . Persona::getInstance()->request->getMethod() . "'. ";
+            $msg = "Route not found for Path: '" . Persona::getInstance()->request->getRequestedUri() . "' with HTTP Method: '" . Persona::getInstance()->request->getMethod() . "'. ";
         else
             $msg = Persona::getInstance()->config->messages->e404 ? Persona::getInstance()->config->messages->e404 : "";
         Persona::getInstance()->response->error($msg, 404);

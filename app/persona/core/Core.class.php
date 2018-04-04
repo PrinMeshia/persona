@@ -6,8 +6,6 @@ abstract class Core
     protected static $objects = [];
     protected static $conf = [];
     protected $routes = [];
-    public $btrace = [];
-    private $_env;
     public $allocatedSize = [];
 
     protected function __construct(){}
@@ -50,9 +48,14 @@ abstract class Core
 
         $this->config = 'app\\persona\\config\\Config';
         $this->config->load('/app/config/persona.json');
-        $this->config->load('/app/config/environment/'.$this->getCurrentEnv().'.json');
+        $this->InitEnvVar();
+        $this->config->load('/app/config/environment/'.$_ENV.'.json');
         $this->session->start();
         $this->debug;
+    }
+    protected function InitEnvVar(){
+        $_ENV = $this->environment->setEnvironment('/app/config/environment.json');
+        $_SESSION["DEBUG"] = [];
     }
     public function getRequest(){
         return $this->request;
@@ -64,11 +67,6 @@ abstract class Core
     }
     public function setTimezone(){
         date_default_timezone_set($this->config->system->timezone ? $this->config->system->timezone : "UTC" );
-    }
-    public function getCurrentEnv(){
-        if(!isset($_ENV["PERSONA"]) || !empty($_ENV["PERSONA"]))
-            $this->environment->setEnvironment('/app/config/environment.json');
-        return $_ENV["PERSONA"];
     }
 
 }

@@ -14,12 +14,12 @@ class Environment {
             foreach ($content as $key => $value) {
                 foreach ($value as $arrayAddress) {
                     if(array_search(Helpers::getUrlServer(),$arrayAddress) !== false || array_search(Helpers::getAddressServer(false),$arrayAddress) !== false){
-                        $_ENV["PERSONA"] = $key;
+                        return $key;
                     }
                 }
             }
         }else{
-            Persona::getInstance()->response->error('The application environment is not set correctly',503);
+            Persona::getInstance()->response->error('[environment::set] - The application environment is not set correctly',503);
             exit(1);
         }
     }

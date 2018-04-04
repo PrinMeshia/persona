@@ -23,8 +23,8 @@ class Response
         header( 'Location: ' . $href ) ;
     }
     private function clearEntry(){
-        Persona::getInstance()->btrace = ob_end_clean();
-       
+        $_SESSION["DEBUG"] = ob_get_clean();
+        ob_end_clean();
     }
     public function Response($filename = '', array $vars = [], $status = 200, array $headers = [],$asText = 0){
         $this->clearEntry();

@@ -24,11 +24,11 @@ class Debug {
                         error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
                     break;
                 default:
-                Persona::getInstance()->response->error('The application environment is not set correctly',503);
+                Persona::getInstance()->response->error('[DEBUG::debug] - The application environment is not set correctly',503);
                     exit(1); 
             }
         }else{
-            Persona::getInstance()->response->error('The application environment is not set correctly',503);
+            Persona::getInstance()->response->error('[DEBUG::environment] - The application environment is not set correctly',503);
             exit(1); 
         }
     }

@@ -11,6 +11,7 @@ class AbstractController{
     protected $persona = "";
     protected $reponse = "";
     protected static $model = [];
+    private $data = [];
     function __set($index, $value)
     {
 
@@ -35,11 +36,21 @@ class AbstractController{
         $this->csspath = sprintf($this->csspath, Helpers::getDirectory(get_called_class()),$action);
         $this->jspath = sprintf($this->jspath, Helpers::getDirectory(get_called_class()),$action);
     }
-    protected function render(array $vars = [])
+    public function render()
     {
+        var_dump($this->data);
         Persona::getInstance()->ressources->assignCssFile($this->csspath);
         Persona::getInstance()->ressources->assignJsFile($this->jspath);
-        $this->reponse->response($this->filename,$vars);
+        $this->reponse->response($this->filename,$this->data);
+        
+    }
+    public function assign(array $data){
+        $this->data = array_merge($this->data, $data);
+    }
+    public function __call($method,$arguments) {
+        echo "test";
+        //call_user_func_array(array($this,$method),$arguments);
+        
     }
     
 
