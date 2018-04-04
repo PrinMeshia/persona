@@ -67,9 +67,6 @@
         "public_css": "{path.asset}css/",
         "public_img": "{path.asset}img/"
     },
-    "routing": {
-        "path": "{path.config}route.json"
-    },
     "userparam": {
         "path": "{path.config}user.json"
     },

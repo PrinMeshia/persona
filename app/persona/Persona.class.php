@@ -1,9 +1,6 @@
 <?php
 namespace app\persona;
 
-
-use app\persona\route\Route;
-
 class Persona extends core\Core
 {
     protected function __construct()
@@ -29,6 +26,7 @@ class Persona extends core\Core
     {
         $this->init();
         $this->setTimezone();
+        
         $this->listen();
     }
  
@@ -43,6 +41,10 @@ class Persona extends core\Core
         }else{
             $this->router->route();
         }
+    }
+    public function getRoutes()
+    {
+        return $this->routes;
     }
     public function generateRoute($uri){
         return ($this->config->root) ?($this->config->root.$uri) : $uri;

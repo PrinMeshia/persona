@@ -12,8 +12,6 @@ abstract class Core
 
     protected function __construct(){}
     public abstract function run();
-    public abstract function loadRoute();
-    public abstract function createRoute($uri,$method, callable $callback);
     public abstract  function listen();
 
 
